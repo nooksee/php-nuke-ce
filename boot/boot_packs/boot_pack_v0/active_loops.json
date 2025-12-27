@@ -1,0 +1,23 @@
+{
+  "version": "0.1",
+  "loops": [
+    {
+      "loop_id": "L-0001",
+      "title": "Stand up Context Pack + retrieval contract in the custom chat interface",
+      "status": "in_progress",
+      "next_step": "Implement prompt assembler that loads boot_pack_v0 + per-turn retrieval from transcripts/artifacts"
+    },
+    {
+      "loop_id": "L-0002",
+      "title": "Decisions index + supersedes graph",
+      "status": "planned",
+      "next_step": "Create canon/decisions/*.md and canon/indexes/decisions_index.json"
+    },
+    {
+      "loop_id": "L-0003",
+      "title": "Extract initial Reference Nodes from transcripts",
+      "status": "planned",
+      "next_step": "Select 10 high-signal topics (Links module, Core Blocks, moderation workflow) and write reference/nodes/*.md with provenance"
+    }
+  ]
+}

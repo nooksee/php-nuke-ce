@@ -1,0 +1,26 @@
+{
+  "schema": "nukece.boot_bundle.layout.v3",
+  "created_utc": "2025-12-26T21:50:20.701968Z",
+  "netbeans_open": "public_html/",
+  "layout": [
+    "public_html/",
+    "boot/",
+    "patches/",
+    "tools/",
+    "storage/",
+    "releases/"
+  ],
+  "boot": {
+    "boot_packs_dir": "boot/boot_packs/",
+    "active_boot_pack_dir": "boot/active/boot_pack/",
+    "active_boot_pack_name": "boot_pack_v2"
+  },
+  "storage": {
+    "meta_dir": "storage/nukece_meta",
+    "note": "NON-public meta; do not deploy to webroot."
+  },
+  "release": "v26",
+  "artifacts": {
+    "public_html_zip": "releases/v26/public_html_v26.zip"
+  }
+}
