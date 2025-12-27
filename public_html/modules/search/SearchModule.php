@@ -49,7 +49,7 @@ class SearchModule extends Model implements ModuleInterface
             } else {
                 echo '<p>No news results.</p>';
             }
-            echo '<h2>Pages</h2>';
+            echo '<h2>Content</h2>';
             if ($contentResults) {
                 echo '<ul>';
                 foreach ($contentResults as $row) {

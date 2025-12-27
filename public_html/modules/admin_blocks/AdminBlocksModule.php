@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace NukeCE\Modules\AdminBlocks;
 
 use NukeCE\Core\ModuleInterface;
-use NukeCE\Core\AdminLayout;
 use NukeCE\Blocks\BlockManager;
 use NukeCE\Security\Csrf;
 use NukeCE\Security\NukeSecurity;
@@ -32,7 +31,18 @@ final class AdminBlocksModule implements ModuleInterface
     {
         NukeSecurity::log('admin_blocks', 'view');
 
-        $bm = new BlockManager(defined('NUKECE_ROOT') ? NUKECE_ROOT : dirname(__DIR__, 2));
+        $root = defined('NUKECE_ROOT') ? NUKECE_ROOT : dirname(__DIR__, 2);
+        require_once $root . '/includes/admin_ui.php';
+        include_once $root . '/includes/header.php';
+
+        AdminUi::header('Blocks', [
+            '/admin' => 'Dashboard',
+            '/admin.php?op=logout' => 'Logout',
+        ]);
+
+        AdminUi::groupStart('Blocks', 'Enable/disable and reorder blocks (drag & drop). Changes are audited.');
+
+        $bm = new BlockManager($root);
         $state = $bm->getState();
         $msg = '';
 
@@ -49,7 +59,7 @@ final class AdminBlocksModule implements ModuleInterface
                     if ($id === '') continue;
                     $pos = (string)($row['position'] ?? 'right');
                     if (!in_array($pos, ['left','right','center'], true)) $pos = 'right';
-                    $disabled = !empty($row['disabled']);
+                    $disabled = isset($row['enabled']) ? empty($row['enabled']) : !empty($row['disabled']);
                     $ttl = (int)($row['cache_ttl'] ?? 0);
                     if ($ttl < 0) $ttl = 0;
 
@@ -84,48 +94,138 @@ final class AdminBlocksModule implements ModuleInterface
             }
         }
 
-        AdminLayout::header('Blocks Admin');
-        echo "<div class='wrap'><div class='card'>";
-        echo "<h1 class='h1'><?= AdminLayout::icon('blocks','blocks') ?>Blocks Admin</h1>";
-        echo "<p style='margin:0 0 12px 0;opacity:.85'>Enable/disable blocks, set positions, and drag to reorder. Classic Nuke workflow, modern convenience.</p>";
-        echo $msg;
+        // Render
+        if ($msg) { echo $msg; }
 
-        echo "<form method='post' action='/index.php?module=admin_blocks'>";
+        echo "<form method='post' action='/index.php?module=admin_blocks' class='adminui-form'>";
         echo "<input type='hidden' name='_csrf' value='{$csrf}'>";
         echo "<input type='hidden' name='action' value='save'>";
 
-        echo "<div class='grid' style='grid-template-columns:1.2fr .8fr .8fr;align-items:start'>";
-        echo "<div>";
-        echo "<h3 style='margin:0 0 8px 0'>Blocks</h3>";
-        echo "<div id='blocksList' style='display:grid;gap:8px'>";
+        // Hidden order fields (synced by JS)
+        $oL = htmlspecialchars(implode("\n", (array)($state['order']['left'] ?? [])), ENT_QUOTES,'UTF-8');
+        $oR = htmlspecialchars(implode("\n", (array)($state['order']['right'] ?? [])), ENT_QUOTES,'UTF-8');
+        $oC = htmlspecialchars(implode("\n", (array)($state['order']['center'] ?? [])), ENT_QUOTES,'UTF-8');
+        echo "<input type='hidden' id='order_left' name='order_left' value='{$oL}'>";
+        echo "<input type='hidden' id='order_right' name='order_right' value='{$oR}'>";
+        echo "<input type='hidden' id='order_center' name='order_center' value='{$oC}'>";
 
-        $i = 0;
+        echo "<div class='adminui-help'>Classic Nuke workflow, modern convenience. Drag blocks to reorder within each column. All changes are audited by NukeSecurity.</div>";
+
+        echo "<div class='adminui-grid3' style='margin-top:12px'>";
+        // Left / Center / Right columns
+        $cols = [
+            'left' => 'Left',
+            'center' => 'Center',
+            'right' => 'Right',
+        ];
+
+        // Map blocks by position
+        $byPos = ['left'=>[], 'center'=>[], 'right'=>[]];
         foreach (($state['blocks'] ?? []) as $b) {
             if (!is_array($b)) continue;
-            $id = htmlspecialchars((string)($b['id'] ?? ''), ENT_QUOTES, 'UTF-8');
-            if ($id === '') continue;
-            $pos = (string)($b['position'] ?? 'right');
-            $dis = !empty($b['disabled']);
-            $chk = $dis ? "checked" : "";
-            echo "<div class='item' draggable='true' data-id='{$id}' style='border:1px solid #e2e2e2;border-radius:12px;padding:10px;background:#fff'>";
-            echo "<div style='display:flex;justify-content:space-between;gap:10px;align-items:center'>";
-            echo "<b>{$id}</b>";
-            echo "<label style='display:flex;gap:8px;align-items:center;opacity:.9'><input type='checkbox' name='blocks[{$i}][disabled]' value='1' {$chk}>disabled</label>";
-            echo "</div>";
-            echo "<div style='display:flex;gap:10px;align-items:center;margin-top:8px'>";
-            echo "<input type='hidden' name='blocks[{$i}][id]' value='{$id}'>";
-            echo "<label>Position</label>";
-            echo "<select name='blocks[{$i}][position]'>";
-            foreach (['left'=>'Left','center'=>'Center','right'=>'Right'] as $k=>$lbl) {
-                $sel = ($pos === $k) ? "selected" : "";
-                echo "<option value='{$k}' {$sel}>{$lbl}</option>";
-            }
-            echo "</select>";
-            echo "<span class='muted'><small>Drag to reorder</small></span>";
-            echo "</div>";
-            echo "</div>";
-            $i++;
+            $pid = (string)($b['position'] ?? 'right');
+            if (!isset($byPos[$pid])) $pid = 'right';
+            $byPos[$pid][] = $b;
         }
+
+        // Sort each position by stored order
+        foreach ($cols as $pos => $label) {
+            $order = (array)($state['order'][$pos] ?? []);
+            $index = [];
+            foreach ($order as $i => $bid) { $index[(string)$bid] = $i; }
+            usort($byPos[$pos], function($a,$b) use ($index){
+                $ai = $index[(string)($a['id'] ?? '')] ?? 999999;
+                $bi = $index[(string)($b['id'] ?? '')] ?? 999999;
+                return $ai <=> $bi;
+            });
+
+            echo "<div class='adminui-group'>";
+            echo "<div class='adminui-group-title'>".htmlspecialchars($label,ENT_QUOTES,'UTF-8')."</div>";
+            echo "<div class='adminui-group-sub'>Drag to reorder</div>";
+
+            echo "<ul class='adminui-draglist' data-pos='{$pos}' id='drag_{$pos}'>";
+            $idx = 0;
+            foreach ($byPos[$pos] as $b) {
+                $idRaw = (string)($b['id'] ?? '');
+                $id = htmlspecialchars($idRaw, ENT_QUOTES, 'UTF-8');
+                $disabled = !empty($b['disabled']);
+                $checked = $disabled ? "" : "checked";
+                echo "<li class='adminui-dragitem' draggable='true' data-id='{$id}'>";
+                echo "<div class='adminui-row'>";
+                echo "<div class='adminui-col' style='flex:1'>";
+                echo "<div class='adminui-label'><code>{$id}</code></div>";
+                echo "</div>";
+                echo "<div class='adminui-col' style='display:flex;gap:10px;align-items:center'>";
+                // enabled checkbox (invert disabled)
+                echo "<label class='adminui-check'><input type='checkbox' name='blocks[{$pos}_{$idx}][enabled]' value='1' {$checked}> Enabled</label>";
+                echo "<input type='hidden' name='blocks[{$pos}_{$idx}][id]' value='{$id}'>";
+                echo "<input type='hidden' name='blocks[{$pos}_{$idx}][position]' value='{$pos}'>";
+                echo "</div>";
+                echo "</div>";
+                echo "</li>";
+                $idx++;
+            }
+            echo "</ul>";
+
+            echo "</div>";
+        }
+
+        echo "</div>"; // grid
+
+        echo "<div class='adminui-toolbar' style='margin-top:14px'>";
+        echo "<button class='adminui-btn primary' type='submit'>Save</button>";
+        echo "<a class='adminui-btn' href='/admin.php?op=audit&scope=admin_blocks'>View audit log</a>";
+        echo "</div>";
+
+        echo "</form>";
+
+        // Drag/drop JS (no deps)
+        echo "<script>
+        (function(){
+          function sync(pos){
+            const list = document.getElementById('drag_'+pos);
+            if(!list) return;
+            const ids = Array.from(list.querySelectorAll('.adminui-dragitem')).map(li=>li.getAttribute('data-id')||'').filter(Boolean);
+            const hidden = document.getElementById('order_'+pos);
+            if(hidden) hidden.value = ids.join('\\n');
+          }
+          function wire(pos){
+            const list = document.getElementById('drag_'+pos);
+            if(!list) return;
+            let dragEl = null;
+            list.addEventListener('dragstart', (e)=>{
+              const li = e.target.closest('.adminui-dragitem');
+              if(!li) return;
+              dragEl = li;
+              li.classList.add('dragging');
+              e.dataTransfer.effectAllowed='move';
+            });
+            list.addEventListener('dragend', ()=>{
+              if(dragEl) dragEl.classList.remove('dragging');
+              dragEl=null;
+              sync(pos);
+            });
+            list.addEventListener('dragover', (e)=>{
+              e.preventDefault();
+              const after = (function(container, y){
+                const items = [...container.querySelectorAll('.adminui-dragitem:not(.dragging)')];
+                return items.reduce((closest, child)=>{
+                  const box = child.getBoundingClientRect();
+                  const offset = y - box.top - box.height/2;
+                  if(offset < 0 && offset > closest.offset){ return {offset:offset, element:child}; }
+                  return closest;
+                }, {offset:-Infinity, element:null}).element;
+              })(list, e.clientY);
+              const dragging = list.querySelector('.dragging');
+              if(!dragging) return;
+              if(after==null) list.appendChild(dragging);
+              else list.insertBefore(dragging, after);
+            });
+          }
+          ['left','center','right'].forEach(wire);
+          ['left','center','right'].forEach(sync);
+        })();
+        </script>";
 
         echo "</div></div>";
 
@@ -169,8 +269,10 @@ final class AdminBlocksModule implements ModuleInterface
         </script>";
 
         echo "</div></div>";
-        AdminLayout::footer();
-    }
+        AdminUi::groupEnd();
+        AdminUi::footer();
+        include_once $root . '/includes/footer.php';
+}
 
     private function renderOrderBox(string $pos, array $state): string
     {

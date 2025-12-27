@@ -39,6 +39,13 @@ final class Csrf
         return (string)$_SESSION['_csrf'];
     }
 
+    public static function field(): string
+    {
+         = self::token();
+        return "<input type="hidden" name="_csrf" value="" . htmlspecialchars(, ENT_QUOTES, 'UTF-8') . "">";
+    }
+
+
     public static function validate(?string $token): bool
     {
         self::ensureSession();

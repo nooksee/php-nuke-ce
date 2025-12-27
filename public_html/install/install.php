@@ -1,16 +1,11 @@
 <?php
-// nukeCE install guard: require explicit allow flag
-$allow = __DIR__ . '/../config/ALLOW_INSTALL';
-if (!is_file($allow)) {
-    http_response_code(403);
-    header('Content-Type: text/plain; charset=utf-8');
-    echo "Installer is locked. To run installer, create: public_html/config/ALLOW_INSTALL\n";
-    echo "Remove it immediately after installation.\n";
-    exit;
+// Safety lock: prevent installer scripts from running after setup.
+$__nukece_lock = __DIR__ . '/LOCK';
+if (is_file($__nukece_lock)) {
+    header('HTTP/1.1 403 Forbidden');
+    exit('Installer is locked. Remove install/LOCK to run installers.');
 }
-?>
 
-<?php
 /*
  * PHP-Nuke CE (Community Edition / Custom Edition)
  * Project name in-code: nukeCE
@@ -75,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $schema[] = "CREATE TABLE IF NOT EXISTS content (\n            id INT AUTO_INCREMENT PRIMARY KEY,\n            title VARCHAR(255) NOT NULL,\n            body TEXT NOT NULL,\n            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP\n        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         // Downloads directory
         $schema[] = "CREATE TABLE IF NOT EXISTS downloads (\n            id INT AUTO_INCREMENT PRIMARY KEY,\n            title VARCHAR(255) NOT NULL,\n            description TEXT NOT NULL,\n            url VARCHAR(255) NOT NULL\n        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
-        // Reference entries
-        $schema[] = "CREATE TABLE IF NOT EXISTS reference (\n            id INT AUTO_INCREMENT PRIMARY KEY,\n            term VARCHAR(255) NOT NULL,\n            definition TEXT NOT NULL\n        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+        // Encyclopedia entries
+        $schema[] = "CREATE TABLE IF NOT EXISTS encyclopedia (\n            id INT AUTO_INCREMENT PRIMARY KEY,\n            term VARCHAR(255) NOT NULL,\n            definition TEXT NOT NULL\n        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         // FAQ entries
         $schema[] = "CREATE TABLE IF NOT EXISTS faq (\n            id INT AUTO_INCREMENT PRIMARY KEY,\n            question TEXT NOT NULL,\n            answer TEXT NOT NULL\n        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         // Journal entries
@@ -114,8 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'description' => 'This is a sample download entry.',
             'url' => 'https://example.com/file.zip',
         ]);
-        // Insert sample reference entry
-        $stmt = $pdo->prepare('INSERT INTO reference (term, definition) VALUES (:term, :definition)');
+        // Insert sample encyclopedia entry
+        $stmt = $pdo->prepare('INSERT INTO encyclopedia (term, definition) VALUES (:term, :definition)');
         $stmt->execute([
             'term' => 'PHP',
             'definition' => 'PHP is a popular general‑purpose scripting language that is especially suited to web development.',

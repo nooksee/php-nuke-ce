@@ -51,7 +51,7 @@ final class AdminLoginModule implements ModuleInterface
                 $p = (string)($_POST['password'] ?? '');
                 if ($u === $adminUser && $adminPassHash !== '' && password_verify($p, $adminPassHash)) {
                     AuthGate::loginAsAdmin();
-                    header('Location: /index.php?module=admin_forums');
+                    header('Location: /index.php?module=admin_settings');
                     return;
                 }
                 $err = "Invalid credentials.";

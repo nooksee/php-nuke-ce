@@ -35,3 +35,19 @@
 .nukece-admin table { width:100%; border-collapse: collapse; }
 .nukece-admin th, .nukece-admin td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,.10); text-align:left; font-size: 13px; }
 .nukece-admin th { font-weight: 800; opacity: .95; }
+
+
+/* AdminUi drag list (Blocks Admin) */
+.adminui-grid3{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);} 
+.adminui-group{background:#fff;border:1px solid #e6e6e6;border-radius:14px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.04);} 
+.adminui-group-title{font-weight:700;margin:0 0 2px 0;} 
+.adminui-group-sub{opacity:.75;font-size:13px;margin:0 0 10px 0;} 
+.adminui-draglist{list-style:none;margin:0;padding:0;display:grid;gap:8px;min-height:40px;} 
+.adminui-dragitem{background:#fafafa;border:1px solid #e6e6e6;border-radius:12px;padding:10px;cursor:grab;} 
+.adminui-dragitem.dragging{opacity:.5;cursor:grabbing;} 
+.adminui-row{display:flex;gap:10px;align-items:center;justify-content:space-between;} 
+.adminui-btn{display:inline-block;padding:8px 12px;border-radius:12px;border:1px solid #ccc;background:#f7f7f7;text-decoration:none;color:#111;} 
+.adminui-btn.primary{background:#dbeafe;border-color:#93c5fd;} 
+.adminui-toolbar{display:flex;gap:10px;align-items:center;} 
+.adminui-help{background:#f7f7fb;border:1px solid #e6e6e6;border-radius:12px;padding:10px;font-size:13px;}
+.adminui-check{font-size:13px;}

@@ -11,7 +11,6 @@ namespace NukeCE\Modules\AdminForums;
 
 use NukeCE\Core\ModuleInterface;
 use NukeCE\Core\AdminLayout;
-use NukeCE\Core\SafeFile;
 use NukeCE\Security\Csrf;
 use NukeCE\Security\AuthGate;
 
@@ -24,6 +23,17 @@ final class AdminForumsModule implements ModuleInterface
         Csrf::ensureSession();
         // Defense in depth (Router also gates admin_*)
         AuthGate::requireAdminOrRedirect();
+
+        $root = defined('NUKECE_ROOT') ? NUKECE_ROOT : dirname(__DIR__, 2);
+        require_once $root . '/includes/admin_ui.php';
+        include_once $root . '/includes/header.php';
+
+        AdminUi::header('Forums Admin', [
+            '/admin' => 'Dashboard',
+            '/admin.php?op=logout' => 'Logout',
+        ]);
+
+        AdminUi::groupStart('Routing & Safety', 'Keep users inside the wrapper. Safe rewrite mode prevents fall-out.');
 
         $cfg = $this->loadAppConfig();
         $dataDir = (string)($cfg['data_dir'] ?? (defined('NUKECE_ROOT') ? NUKECE_ROOT . '/data' : __DIR__ . '/../../data'));
@@ -86,11 +96,8 @@ final class AdminForumsModule implements ModuleInterface
                 }
             }
         }
-
-        AdminLayout::header('Forums Admin');
-
-        echo "<div class='card'>";
-        echo "<h1 class='h1'><?= AdminLayout::icon('forums','forums') ?>Forums Admin</h1>";
+echo "<div class='card'>";
+        echo "<h1 class='h1'>Forums Admin</h1>";
         echo "<h2 style='margin:0 0 10px 0;font-size:16px;opacity:.9;'>Routing &amp; Safety</h2><div style='margin:0 0 10px 0;opacity:.85'><small>Forums files installer: <code>php install/setup_forums_download.php</code></small></div>";
         if ($saved) echo "<div class='ok' style='margin:10px 0;'>Saved.</div>";
 
@@ -119,7 +126,7 @@ final class AdminForumsModule implements ModuleInterface
         echo $this->textareaCard("Denylist additions (exact filenames)", "denylist_add", $deny_add, "One filename per line, e.g. suspicious.php");
         echo $this->textareaCard("Denylist removals (allow exact filenames)", "denylist_remove", $deny_remove, "One filename per line, e.g. nukebb.php");
         echo $this->textareaCard("Denylist regex additions", "denylist_regex_add", $regex_add, "One regex per line, e.g. /^tool_/i");
-        echo $this->textareaCard("Allow paths (subfolders)", "allow_paths", $allow_paths, "One relative path per line, e.g. mods/arcade.php");
+        echo $this->textareaCard("Allow paths (subfolders)", "allow_paths", $allow_paths, "One relative path per line, e.g. mods/example.php");
         echo $this->textareaCard("Deny paths (subfolders)", "deny_paths_add", $deny_paths_add, "One relative path per line, e.g. mods/admin_tool.php");
         echo "</div>";
 
@@ -192,9 +199,10 @@ echo "</form>";
         echo "</div>";
 
         echo "</div>"; // outer card
-
-        AdminLayout::footer();
-    }
+        AdminUi::groupEnd();
+        AdminUi::footer();
+        include_once $root . '/includes/footer.php';
+}
 
     private function textareaCard(string $title, string $name, string $value, string $hint): string
     {
@@ -553,7 +561,7 @@ private function runAutoTune(string $legacyBase, string $stateFile): string
         'notes' => 'STRICT auto-tune (default-deny). Root scripts denied except allowlist. Subfolder scripts allowed only when explicitly computed safe.',
     ];
 
-    @SafeFile::writeAtomic($stateFile, json_encode($state, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    @file_put_contents($stateFile, json_encode($state, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
     return "<div class='ok'>Strict auto-tune complete. Root allow <b>" . count($allowRoot) . "</b>, root deny <b>" . count($denyAdd) . "</b>, subpath allow <b>" . count($allowPaths) . "</b>. Wrote <code>data/forums_rewrite.json</code>.</div>";
 }
@@ -623,7 +631,7 @@ private function runAutoTune(string $legacyBase, string $stateFile): string
         'notes' => 'STRICT auto-tune (default-deny). All forum root scripts denied except computed allowlist.',
     ];
 
-    @SafeFile::writeAtomic($stateFile, json_encode($state, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    @file_put_contents($stateFile, json_encode($state, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
     return "<div class='ok'>Strict auto-tune complete. Allowing <b>" . count($allow) . "</b> scripts; denying <b>" . count($denyAdd) . "</b>. Wrote <code>data/forums_rewrite.json</code>.</div>";
 }

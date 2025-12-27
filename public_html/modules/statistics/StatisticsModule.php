@@ -25,7 +25,7 @@ class StatisticsModule extends Model implements ModuleInterface
     {
         $pdo = $this->getConnection();
         $counts = [];
-        $tables = ['news', 'content', 'downloads', 'reference', 'faq', 'journal', 'users'];
+        $tables = ['news', 'content', 'downloads', 'encyclopedia', 'faq', 'journal', 'users'];
         foreach ($tables as $table) {
             try {
                 $stmt = $pdo->query('SELECT COUNT(*) AS c FROM ' . $table);
@@ -40,7 +40,7 @@ class StatisticsModule extends Model implements ModuleInterface
         echo '<li>News articles: ' . $counts['news'] . '</li>';
         echo '<li>Content pages: ' . $counts['content'] . '</li>';
         echo '<li>Downloads: ' . $counts['downloads'] . '</li>';
-        echo '<li>Reference entries: ' . $counts['reference'] . '</li>';
+        echo '<li>Encyclopedia entries: ' . $counts['encyclopedia'] . '</li>';
         echo '<li>FAQs: ' . $counts['faq'] . '</li>';
         echo '<li>Journal entries: ' . $counts['journal'] . '</li>';
         echo '<li>Members: ' . $counts['users'] . '</li>';

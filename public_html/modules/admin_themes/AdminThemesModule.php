@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace NukeCE\Modules\AdminThemes;
 
 use NukeCE\Core\ModuleInterface;
-use NukeCE\Core\AdminLayout;
 use NukeCE\Core\Theme;
 use NukeCE\Security\Csrf;
 use NukeCE\Security\NukeSecurity;
@@ -24,6 +23,14 @@ final class AdminThemesModule implements ModuleInterface
         NukeSecurity::requireAdmin();
 
         $root = defined('NUKECE_ROOT') ? NUKECE_ROOT : dirname(__DIR__, 2);
+        require_once $root . '/includes/admin_ui.php';
+        include_once $root . '/includes/header.php';
+
+        AdminUi::header('Themes', [
+            '/admin' => 'Dashboard',
+            '/admin.php?op=logout' => 'Logout',
+        ]);
+
         $stateFile = rtrim($root, '/\\') . '/data/themes_state.json';
         @mkdir(dirname($stateFile), 0755, true);
 
@@ -65,9 +72,7 @@ final class AdminThemesModule implements ModuleInterface
         $themes = Theme::listThemes();
         $default = (string)($state['default'] ?? Theme::defaultSlug());
         $allowUser = (bool)($state['allow_user'] ?? Theme::allowUserSelection());
-
-        AdminLayout::header('Themes');
-        echo "<h1 class='h1'><?= AdminLayout::icon('themes','themes') ?>Themes</h1>";
+echo "<h1 class='h1'>Themes</h1>";
         if ($msg) echo "<div class='ok' style='margin:10px 0'>" . htmlspecialchars($msg, ENT_QUOTES,'UTF-8') . "</div>";
 
         $csrf = Csrf::token();
@@ -153,9 +158,11 @@ if ($selTheme === 'x-halo') {
 
 echo "<div><button class='btn' type='submit'>Save features</button></div>";
 echo "</form>";
+        AdminUi::groupEnd();
 
-        AdminLayout::footer();
-    }
+        AdminUi::footer();
+        include_once $root . '/includes/footer.php';
+}
 
     private function loadState(string $file): array
     {

@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             SiteConfig::set('ai.temperature', (int)($_POST['ai_temperature'] ?? 20), 'int', $actor, 'AI temperature x100');
         }
         if ($tab === 'features') {
-            $features = ['moderation_triage','reference_proposals','editor_hints','editor_summarize','editor_grammar'];
+            $features = ['moderation_triage','reference_proposals','editor_hints','editor_summarize','editor_grammar','downloads_metadata','downloads_safety_scan','downloads_link_check'];
             foreach ($features as $f) {
                 SiteConfig::set('ai.feature.'.$f, !empty($_POST['f_'.$f]), 'bool', $actor, 'AI feature toggle');
             }
@@ -100,13 +100,7 @@ if ($tab === 'features') {
     $csrf = class_exists('NukeCE\Security\Csrf') ? \NukeCE\Security\Csrf::token() : '';
     echo '<form method="post" action="/index.php?module=admin_ai&tab=features">';
     if ($csrf) echo '<input type="hidden" name="_csrf" value="'.htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8').'" />';
-    $features = [
-      'moderation_triage' => 'Moderation triage suggestions',
-      'reference_proposals' => 'Reference proposals (AI proposes → humans canonize)',
-      'editor_hints' => 'Editor hints (inline)',
-      'editor_summarize' => 'Summarize tool',
-      'editor_grammar' => 'Grammar tool',
-    ];
+    $features = ['moderation_triage','reference_proposals','editor_hints','editor_summarize','editor_grammar','downloads_metadata','downloads_safety_scan','downloads_link_check'];
     foreach ($features as $k=>$label) {
         $on = SiteConfig::get('ai.feature.'.$k, false, 'bool') ? 'checked' : '';
         echo '<p><label><input type="checkbox" name="f_'.$k.'" value="1" '.$on.'> '.htmlspecialchars($label).'</label></p>';

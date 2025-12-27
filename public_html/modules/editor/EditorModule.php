@@ -26,6 +26,24 @@ final class EditorModule implements ModuleInterface
         $cfg = is_file($cfgFile) ? (array)include $cfgFile : [];
         $action = (string)($_POST['action'] ?? ($_GET['action'] ?? 'view'));
 
+// AI JSON endpoints (optional)
+if ($action === 'ai_summarize' || $action === 'ai_grammar') {
+    header('Content-Type: application/json; charset=utf-8');
+    $text = (string)($_POST['text'] ?? '');
+    $actor = AuthGate::currentUsername() ?: 'user';
+    $feature = ($action === 'ai_summarize') ? 'editor_summarize' : 'editor_grammar';
+    $system = ($action === 'ai_summarize')
+        ? "Summarize the user's text clearly and briefly. Keep intent. No invention."
+        : "Suggest grammar and clarity improvements. Return improved text only. No invention.";
+    $res = \NukeCE\AI\AiService::run($feature, $system, $text, [
+        'actor' => $actor,
+        'source_module' => 'editor',
+        'source_id' => 'assist',
+    ]);
+    echo json_encode(['ok'=>$res['ok'],'text'=>$res['text'],'meta'=>$res['meta']], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+    return;
+}
+
         $msg = '';
         if ($action === 'save') {
             if (!Csrf::validate($_POST['_csrf'] ?? null)) {

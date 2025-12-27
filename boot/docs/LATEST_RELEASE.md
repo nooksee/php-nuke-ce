@@ -1,4 +1,2 @@
-# Latest Release
-Current baseline release: v26
-
-See: releases/v26/RELEASE_NOTES_v26.md
+Current baseline release: v27
+See: releases/v27/RELEASE_NOTES_v27.md

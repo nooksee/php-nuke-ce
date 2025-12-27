@@ -30,8 +30,8 @@ class UpdateAI
         // Example stub: log that updates were checked. In a real
         // implementation, you might fetch instructions from a remote
         // AI service and apply patches automatically.
-        $logFile = \NukeCE\Core\StoragePaths::join(\NukeCE\Core\StoragePaths::logsDir(), 'update.log');
-        \NukeCE\Core\SafeFile::appendLocked($logFile, date('c') . " - AI update check performed\n");
+        $logFile = __DIR__ . '/../../update.log';
+        file_put_contents($logFile, date('c') . " - AI update check performed\n", FILE_APPEND);
         // TODO: Integrate with OpenAI or another AI provider to
         // analyze the codebase and apply security or feature updates.
     }

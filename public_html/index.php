@@ -5,13 +5,8 @@
  */
 declare(strict_types=1);
 
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
-}
-
-
 define('NUKECE_ROOT', __DIR__);
-\1
+require_once NUKECE_ROOT . '/autoload.php';
 require_once NUKECE_ROOT . '/includes/security_gate.php';
 
 use NukeCE\Core\ModuleManager;

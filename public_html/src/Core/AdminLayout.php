@@ -35,16 +35,51 @@ final class AdminLayout
             .badge{display:inline-block;padding:3px 8px;border-radius:999px;border:1px solid #ccc;background:#f6f6f6;font-size:12px}
             .badge.ok{border-color:#8c8;background:#efe}
             .badge.bad{border-color:#c88;background:#fee}
+
+            /* AdminUi (Phase 2) */
+            .adminui-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}
+            .adminui-head-left{display:flex;gap:10px;align-items:flex-start}
+            .adminui-h1{margin:0;font-size:24px;line-height:1.2}
+            .adminui-sub{margin-top:4px;opacity:.7;font-size:12px}
+            .adminui-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+            .adminui-muted{opacity:.7;font-size:12px}
+            .adminui-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0}
+            .adminui-card{background:#fff;border:1px solid #e2e2e2;border-radius:14px;padding:12px}
+            .adminui-card-title{font-weight:700}
+            .adminui-card-value{font-size:28px;margin-top:6px}
+            .adminui-group{background:#fff;border:1px solid #e2e2e2;border-radius:16px;margin:14px 0;overflow:hidden}
+            .adminui-group-head{padding:12px 14px;background:#fafafa;border-bottom:1px solid #eee}
+            .adminui-group-title{font-weight:800}
+            .adminui-group-body{padding:14px}
+            .adminui-code{border:1px solid #e2e2e2;border-radius:14px;background:#0b0b0b;color:#eaeaea;padding:10px;overflow:auto;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.45}
+            .adminui-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+            .adminui-field input,.adminui-field select,.adminui-field textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:12px}
+            .adminui-input{padding:10px;border:1px solid #ccc;border-radius:12px}
+            .adminui-label{display:block;font-weight:700;margin-bottom:6px}
+            .adminui-help{margin-top:6px;opacity:.7;font-size:12px}
+
+            .adminui-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+            .adminui-tab{display:inline-block;padding:10px 12px;border:1px solid #ccc;border-radius:12px;background:#fff;color:#111;text-decoration:none}
+            .adminui-tab.is-active{border-color:#111;background:#111;color:#fff}
+            .adminui-table{width:100%;border-collapse:collapse}
+            .adminui-table th{background:#fafafa;text-align:left;padding:10px;border-bottom:1px solid #eee}
+            .adminui-table td{padding:10px;border-top:1px solid #eee;vertical-align:top}
+            .adminui-actions-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+            .adminui-check{display:flex;gap:10px;align-items:flex-start}
+            .adminui-check input[type=checkbox]{margin-top:3px}
+            .adminui-notice{padding:10px 12px;border-radius:12px;border:1px solid #ccc;background:#fff;margin:10px 0}
+            .adminui-notice.is-ok{border-color:#8c8;background:#efe}
+            .adminui-notice.is-err{border-color:#c88;background:#fee}
+            .adminui-notice.is-warn{border-color:#cc8;background:#ffd}
+            .adminui-notice.is-info{border-color:#8ac;background:#eef}
+            .adminui-table-wrap{overflow:auto}
+
         </style></head><body>";
         echo "<div class='top'><div><b>nukeCE</b> &nbsp;|&nbsp; Admin</div><div style='display:flex;gap:12px;align-items:center;'>
                 <a href='/index.php'>Site</a>
+                <a href='/index.php?module=admin_settings'>Settings</a>
+                <a href='/index.php?module=admin_moderation'>Moderation</a>
                 <a href='/index.php?module=admin_forums'>Forums Admin</a>
-                <a href='/index.php?module=admin_content'>Pages Admin</a>
-                <a href='/index.php?module=admin_reference'>Knowledge Base</a>
-                <a href='/index.php?module=admin_blocks'>Blocks</a>
-                <a href='/index.php?module=admin_nukesecurity'>NukeSecurity</a>
-                <a href='/index.php?module=admin_themes'>Themes</a>
-                <a href='/index.php?module=admin_users'>Users &amp; Roles</a>
                 <a href='/index.php?module=admin_login&logout=1'>Logout</a>
               </div></div>";
         echo "<div class='wrap'>";

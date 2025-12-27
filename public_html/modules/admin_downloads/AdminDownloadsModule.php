@@ -9,8 +9,6 @@ declare(strict_types=1);
 namespace NukeCE\Modules\AdminDownloads;
 
 use NukeCE\Core\AdminLayout;
-use NukeCE\Core\AppConfig;
-use NukeCE\Core\StoragePaths;
 use NukeCE\Core\Model;
 use NukeCE\Security\AuthGate;
 use NukeCE\Security\Csrf;
@@ -79,8 +77,8 @@ final class AdminDownloadsModule extends Model
                         $tmp = (string)$_FILES['file']['tmp_name'];
                         $orig = (string)$_FILES['file']['name'];
                         $safe = preg_replace('/[^a-zA-Z0-9._-]/', '_', $orig);
-                        $dir = StoragePaths::join(StoragePaths::uploadsDir(), 'downloads');
-if (!is_dir($dir)) @mkdir($dir, 0775, true);
+                        $dir = NUKECE_ROOT . '/files/downloads';
+                        if (!is_dir($dir)) @mkdir($dir, 0775, true);
                         $dest = $dir . '/' . $id . '_' . time() . '_' . $safe;
                         if (@move_uploaded_file($tmp, $dest)) {
                             $rel = ltrim(str_replace(NUKECE_ROOT . '/', '', $dest), '/');

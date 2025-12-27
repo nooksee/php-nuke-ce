@@ -56,16 +56,6 @@ function nukece_csrf_check($token) {
 }
 
 // Utilities
-function nukece_dir_status($path) {
-    $exists = is_dir($path);
-    $writable = $exists ? is_writable($path) : false;
-    return [$exists, $writable];
-}
-function nukece_ensure_dir($path) {
-    if (is_dir($path)) return true;
-    return @mkdir($path, 0755, true);
-}
-
 function rrmdir_contents($dir) {
     if (!is_dir($dir)) return [0,0];
     $files = new RecursiveIteratorIterator(
@@ -100,22 +90,12 @@ function rotate_log_file($path, $keep = 5) {
 }
 
 // Paths (safe defaults)
-// Canonical writable dirs (from config)
-$uploadsDir = \NukeCE\Core\StoragePaths::uploadsDir();
-$cacheDir   = \NukeCE\Core\StoragePaths::cacheDir();
-$tmpDir     = \NukeCE\Core\StoragePaths::tmpDir();
-$logsDir    = \NukeCE\Core\StoragePaths::logsDir();
-
 $cacheDirs = [
-    $cacheDir,
-    // legacy locations (kept for compatibility checks)
+    $ROOT . '/cache',
     $ROOT . '/data/cache',
     $ROOT . '/tmp/cache',
 ];
 $logFiles = [
-    $logsDir . '/app.log',
-    $logsDir . '/nukesecurity.log',
-    // legacy locations (kept for compatibility checks)
     $ROOT . '/data/nukesecurity.log',
     $ROOT . '/data/logs/nukesecurity.log',
     $ROOT . '/data/logs/app.log',
@@ -127,21 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action) {
     $csrf = $_POST['csrf'] ?? '';
     if (!nukece_csrf_check($csrf)) {
         $messages[] = ['type' => 'error', 'text' => 'Security check failed. Please refresh and try again.'];
-    } 
-    // Ensure canonical writable dirs exist (v16)
-    if ($action === 'create_writable_dirs') {
-        $ok1 = nukece_ensure_dir($uploadsDir);
-        $ok2 = nukece_ensure_dir($cacheDir);
-        $ok3 = nukece_ensure_dir($tmpDir);
-        $ok4 = nukece_ensure_dir($logsDir);
-        if ($ok1 && $ok2 && $ok3 && $ok4) {
-            $messages[] = ['ok', 'Writable dirs created/verified.'];
-        } else {
-            $messages[] = ['err', 'Failed to create one or more writable dirs. Check permissions.'];
-        }
-    }
-
-else {
+    } else {
         switch ($action) {
             case 'clear_cache':
                 $totalFiles = 0; $totalDirs = 0;

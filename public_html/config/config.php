@@ -2,37 +2,36 @@
 /*
  * PHP-Nuke CE (Community Edition / Custom Edition)
  * Project name in-code: nukeCE
- *
- * NOTE: This file is generated/shipped for Docker/local dev convenience.
- * You may edit it directly, or run /install/install.php to regenerate.
  */
 
+/**
+ * Sample configuration file for nukeCE. To configure your installation,
+ * copy this file to config.php and customise the values below to
+ * match your environment. You can also use install/install.php which
+ * generates a config.php for you.
+ */
 return [
     // Feature toggles (safe disable)
     'forums_enabled' => true,
     'messages_enabled' => true,
-    'editor_enabled' => true,
+    'editor_enabled' => false,
+    'editor_messages_enabled' => false,
+    'editor_forums_enabled' => false,
+    'editor_news_enabled' => false,
 
-    'admin_user' => getenv('NUKECE_ADMIN_USER') ?: 'admin',
-    // Set NUKECE_ADMIN_PASS_HASH to password_hash('yourpassword', PASSWORD_BCRYPT)
-    'admin_pass_hash' => getenv('NUKECE_ADMIN_PASS_HASH') ?: '',
+    'admin_user' => 'admin',
+    // Set admin_pass_hash to password_hash('yourpassword', PASSWORD_BCRYPT)
+    'admin_pass_hash' => '',
 
     'data_dir' => NUKECE_ROOT . '/data',
 
-    // Writable dirs (webroot-resident; HTTP hardened via .htaccess)
-    'uploads_dir' => getenv('NUKECE_UPLOADS_DIR') ?: (NUKECE_ROOT . '/uploads'),
-    'cache_dir'   => getenv('NUKECE_CACHE_DIR')   ?: (NUKECE_ROOT . '/cache'),
-    'tmp_dir'     => getenv('NUKECE_TMP_DIR')     ?: (NUKECE_ROOT . '/tmp'),
-    'logs_dir'    => getenv('NUKECE_LOGS_DIR')    ?: (NUKECE_ROOT . '/logs'),
-
     // Themes
-    'theme_default' => getenv('NUKECE_THEME_DEFAULT') ?: 'nukegold',
+    'theme_default' => 'nukegold',
     'theme_allow_user' => true,
     'theme_cookie_name' => 'nukece_theme',
 
-    // Database (Docker defaults)
-    'db_host' => getenv('NUKECE_DB_HOST') ?: 'db',
-    'db_name' => getenv('NUKECE_DB_NAME') ?: 'nukece',
-    'db_user' => getenv('NUKECE_DB_USER') ?: 'nukece',
-    'db_pass' => getenv('NUKECE_DB_PASS') ?: 'nukece',
+    'db_host' => 'localhost',      // Database host
+    'db_name' => 'nukece',         // Database name
+    'db_user' => 'username',       // Database user
+    'db_pass' => 'password',       // Database password
 ];

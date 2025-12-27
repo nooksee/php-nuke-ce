@@ -1,22 +1,6 @@
-# nukeCE CMS (so far)
+# nukeCE Attribution, Credits, and Manifesto Re-export
 
-Minimal "CMS in action" baseline:
-- PDO DB connector
-- Installer creates users/sessions tables + admin user
-- Admin login/logout/session gate + dashboard
-- Pages: migrate + list + create/edit + public render
+This archive contains the documentation and module scaffolding
+for attribution, credits, and the nukeCE design manifesto.
 
-Default admin credentials (change immediately):
-- admin / admin123
-
-## Setup
-1. Edit `includes/config.php` to match your MariaDB credentials.
-2. Visit `/admin/install.php` once.
-3. Visit `/admin/login.php` and log in.
-4. Visit `/admin/migrate_pages.php` once.
-5. Use `/admin/pages.php` to create content, view via `/page.php?slug=...`
-
-## Security
-After install:
-- rename/delete `admin/install.php`
-- rename/delete `admin/migrate_pages.php` (or protect them)
+If you need the full CMS tree re-exported, reply and it will be rebuilt.

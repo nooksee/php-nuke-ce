@@ -1,25 +1,18 @@
 <?php
 declare(strict_types=1);
 
-/*
- * PHP-Nuke CE (Community Edition / Custom Edition)
- * Project name in-code: nukeCE
- *
- * File: modules/forums/ForumsModule.php
- */
-
-
 namespace NukeCE\Modules\Forums;
 
 use NukeCE\Core\ModuleInterface;
 use NukeCE\Core\Layout;
+use NukeCE\Core\Maintenance;
 use NukeCE\Editor\EditorService;
 
 final class ForumsModule implements ModuleInterface
 {
     private string $legacyBase;
     private bool $safeRewrite = true;
-    /** @var array<string,string> key => relative script path (e.g. viewtopic.php or mods/arcade.php) */
+    /** @var array<string,string> key => relative script path (e.g. viewtopic.php or mods/example.php) */
     private array $scriptMap = [];
     private array $appConfig = [];
     private array $override = [];

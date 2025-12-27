@@ -21,24 +21,9 @@ final class ModuleManager
     public function getModule(string $name): ModuleInterface
     {
         $name = strtolower(preg_replace('/[^a-z0-9_\-]/i', '', $name) ?? $name);
-        \1
+        if ($name === '') $name = 'home';
 
-        // Optional-module gate (default-off)
-        $manifest = @include __DIR__ . '/../../includes/modules_manifest.php';
-        $enabledOpt = [];
-        $enabledFile = __DIR__ . '/../../config/ENABLED_OPTIONAL_MODULES.php';
-        if (is_file($enabledFile)) {
-            $tmp = @include $enabledFile;
-            if (is_array($tmp)) { $enabledOpt = array_map('strtolower', $tmp); }
-        }
-        if (is_array($manifest) && isset($manifest['optional']) && is_array($manifest['optional'])) {
-            $optional = array_map('strtolower', $manifest['optional']);
-            if (in_array($name, $optional, true) && !in_array($name, $enabledOpt, true)) {
-                throw new RuntimeException("Module '$name' is optional and not enabled");
-            }
-        }
-
-if (isset($this->modules[$name])) {
+        if (isset($this->modules[$name])) {
             return $this->modules[$name];
         }
 

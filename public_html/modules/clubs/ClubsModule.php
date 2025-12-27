@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace NukeCE\Modules\Clubs;
 
 use NukeCE\Core\Layout;
+use NukeCE\Core\Labels;
 use NukeCE\Core\Model;
 use PDO;
 
@@ -22,7 +23,7 @@ final class ClubsModule extends Model
         $op = (string)($_GET['op'] ?? 'index');
         $id = (int)($_GET['id'] ?? 0);
 
-        Layout::header('Clubs');
+        Layout::header(Labels::get('clubs','Clubs'));
 
         echo '<div class="nukece-clubs">';
         echo '<h1>Clubs</h1>';
@@ -162,6 +163,14 @@ final class ClubsModule extends Model
         return $m && $m['status'] === 'active';
     }
 
+    
+private function memberCount(PDO $pdo, int $clubId): int
+{
+    $st = $pdo->prepare("SELECT COUNT(*) FROM club_members WHERE club_id=? AND status='active'");
+    $st->execute([$clubId]);
+    return (int)$st->fetchColumn();
+}
+
     private function canManage(PDO $pdo, int $clubId): bool
     {
         $m = $this->membership($pdo, $clubId, $this->currentUser());
@@ -238,7 +247,13 @@ final class ClubsModule extends Model
         }
 
         $name = htmlspecialchars((string)$club['name'], ENT_QUOTES, 'UTF-8');
-        echo '<h2>'.$name.'</h2>';
+        echo '<h2>'.$name.'</h2>'; 
+        $logo = (string)($club['logo_path'] ?? '');
+        if ($logo !== '') {
+            $src = htmlspecialchars($logo, ENT_QUOTES, 'UTF-8');
+            echo '<p><img src="/'.$src.'" alt="Club logo" style="max-width:160px;max-height:160px;border-radius:10px;" /></p>';
+        }
+        echo '<p><small>Members: '.$this->memberCount($pdo, $id).'</small></p>';
         echo '<p>'.nl2br(htmlspecialchars((string)($club['description'] ?? ''), ENT_QUOTES, 'UTF-8')).'</p>';
 
         $this->joinUI($pdo, $club);
@@ -421,6 +436,31 @@ final class ClubsModule extends Model
         echo '</form>';
 
         echo '<h3>Uploads</h3>';
+
+echo '<h3>Upload Club Logo</h3>';
+echo '<form method="post" enctype="multipart/form-data" style="margin-bottom:18px">';
+echo '<input type="hidden" name="act" value="upload_logo" />';
+echo '<p><input type="file" name="logo" accept="image/*"></p>';
+echo '<p><button type="submit">Upload Logo</button></p>';
+echo '</form>';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string)($_POST['act'] ?? '') === 'upload_logo' && !empty($_FILES['logo']['tmp_name'])) {
+    $tmp = (string)$_FILES['logo']['tmp_name'];
+    $orig = (string)$_FILES['logo']['name'];
+    $safe = preg_replace('/[^a-zA-Z0-9._-]/', '_', $orig);
+    $dir = NUKECE_ROOT . '/uploads/clubs/' . $id;
+    if (!is_dir($dir)) @mkdir($dir, 0775, true);
+    $dest = $dir . '/logo_' . time() . '_' . $safe;
+    if (@move_uploaded_file($tmp, $dest)) {
+        $rel = ltrim(str_replace(NUKECE_ROOT . '/', '', $dest), '/');
+        $st = $pdo->prepare("UPDATE clubs SET logo_path=? WHERE id=?");
+        $st->execute([$rel, $id]);
+        echo '<p>Logo updated.</p>';
+    } else {
+        echo '<p>Logo upload failed.</p>';
+    }
+}
+
         echo '<p><small>Upload UI will be styled in the next polish pass.</small></p>';
     }
 

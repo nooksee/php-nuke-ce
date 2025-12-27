@@ -49,13 +49,4 @@ final class AuthGate
         self::ensureSession();
         $_SESSION['nukece_is_admin'] = true;
     }
-
-public static function adminName(): ?string
-{
-    if (session_status() !== PHP_SESSION_ACTIVE) {
-        @session_start();
-    }
-    $name = $_SESSION['admin_name'] ?? null;
-    return is_string($name) && $name !== '' ? $name : null;
-}
 }

@@ -37,7 +37,7 @@ $content = BlockGold::cached('coreblock:nukesecurity', 30, function () use ($adm
 
     if ($admin) {
         $out .= '<div class="nukece-security__actions">'
-            . '<a href="admin.php?op=security">Open NukeSecurity</a>'
+            . '<a href="admin.php?op=nukesecurity">Open NukeSecurity</a>'
             . '</div>';
 
         if (is_array($recent) && $recent) {

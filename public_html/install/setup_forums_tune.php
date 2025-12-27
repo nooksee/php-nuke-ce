@@ -1,16 +1,11 @@
 <?php
-// nukeCE install guard: require explicit allow flag
-$allow = __DIR__ . '/../config/ALLOW_INSTALL';
-if (!is_file($allow)) {
-    http_response_code(403);
-    header('Content-Type: text/plain; charset=utf-8');
-    echo "Installer is locked. To run installer, create: public_html/config/ALLOW_INSTALL\n";
-    echo "Remove it immediately after installation.\n";
-    exit;
+// Safety lock: prevent installer scripts from running after setup.
+$__nukece_lock = __DIR__ . '/LOCK';
+if (is_file($__nukece_lock)) {
+    header('HTTP/1.1 403 Forbidden');
+    exit('Installer is locked. Remove install/LOCK to run installers.');
 }
-?>
 
-<?php
 declare(strict_types=1);
 
 
@@ -74,7 +69,7 @@ $explicitRootAllow = [
 $safeSubdirs = [
     'mods',
     'album_mod',
-    'arcade',
+
     'games',
     'kb',
     'downloads',

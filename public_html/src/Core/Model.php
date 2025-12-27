@@ -44,34 +44,4 @@ abstract class Model
         }
         return self::$pdo;
     }
-
-/**
- * Static access to shared PDO instance.
- */
-public static function db(): PDO
-{
-    $m = new class extends Model {};
-    return $m->getConnection();
-}
-
-/**
- * Load config array.
- * @return array<string,mixed>
- */
-public static function config(): array
-{
-    $cfgFile = __DIR__ . '/../../config/config.php';
-    return is_file($cfgFile) ? (array)include $cfgFile : [];
-}
-
-public static function tablePrefix(): string
-{
-    $cfg = self::config();
-    return (string)($cfg['db_prefix'] ?? '');
-}
-
-public static function tn(string $table): string
-{
-    return self::tablePrefix() . $table;
-}
 }

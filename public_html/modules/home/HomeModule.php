@@ -36,11 +36,9 @@ class HomeModule implements ModuleInterface
             echo '<h2>Modules</h2>';
             echo '<p class="muted"><small>This list reflects the classic module structure; some modules are placeholders until implemented.</small></p>';
             echo '<ul style="columns:2;max-width:820px">';
-            $mods = ['advertising','mobile','content','downloads','reference','faq','feedback','forums','journal','members','news','reviews','sections','statistics','submit_news','surveys','top','user'];
+            $mods = ['advertising','mobile','content','downloads','encyclopedia','faq','feedback','forums','journal','members','news','reviews','sections','statistics','submit_news','surveys','top','user'];
             foreach ($mods as $m) {
-                if ($m === 'content') { $label = 'Pages'; }
-                elseif ($m === 'reference') { $label = 'Reference'; }
-                else { $label = htmlspecialchars(ucwords(str_replace('_',' ', $m)), ENT_QUOTES,'UTF-8'); }
+                $label = htmlspecialchars(ucwords(str_replace('_',' ', $m)), ENT_QUOTES,'UTF-8');
                 echo "<li><a href='/index.php?module={$m}'>{$label}</a></li>";
             }
             echo '</ul>';

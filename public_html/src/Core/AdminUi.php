@@ -109,6 +109,12 @@ final class AdminUi
         return $h;
     }
 
+    public static function notice(string $type, string $message): string
+    {
+        $t = in_array($type, ['ok','err','warn','info'], true) ? $type : 'info';
+        return "<div class='adminui-notice is-" . self::eAttr($t) . "' role='status'>" . self::e($message) . "</div>";
+    }
+
     public static function e(string $s): string
     {
         return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');

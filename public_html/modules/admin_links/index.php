@@ -19,13 +19,6 @@ if (is_file($aiPath)) {
 
 $op = $_GET['op'] ?? 'dashboard';
 
-// Best-effort CSRF token for admin actions.
-$csrfToken = '';
-if (class_exists('NukeCE\\Security\\Csrf')) {
-    $csrfToken = (string)\NukeCE\Security\Csrf::token();
-}
-$GLOBALS['csrfToken'] = $csrfToken;
-
 global $db, $prefix;
 $pref = is_string($prefix) ? $prefix . '_' : 'nuke_';
 $dbh = new \NukeCE\Links\LinksDb($db, $pref);
@@ -58,96 +51,6 @@ if (function_exists('is_admin') && !is_admin()) {
 }
 
 switch ($op) {
-    case 'propose_reference':
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: admin.php?op=links_queue');
-            exit;
-        }
-
-        if (class_exists('NukeCE\\Security\\Csrf') && !\NukeCE\Security\Csrf::validate($_POST['_csrf'] ?? null)) {
-            links_notice('error', 'Invalid CSRF token.');
-            header('Location: admin.php?op=links_queue');
-            exit;
-        }
-
-        $lid = (int)($_POST['lid'] ?? 0);
-        if ($lid <= 0) {
-            header('Location: admin.php?op=links_queue');
-            exit;
-        }
-
-        $row = $dbh->one('SELECT lid, url, title, description FROM ' . $dbh->t('links') . ' WHERE lid=' . $lid);
-        if (!$row || empty($row['url'])) {
-            links_notice('error', 'Link not found.');
-            header('Location: admin.php?op=links_queue');
-            exit;
-        }
-
-        // Best-effort: create a Reference proposal if the Reference subsystem exists.
-        $ok = false;
-        try {
-            if (class_exists('NukeCE\\Core\\Model')) {
-                $pdo = \NukeCE\Core\Model::pdo();
-                if ($pdo) {
-                    // Mirror the reference_proposals table used by admin_reference (no harm if already exists)
-                    $pdo->exec("CREATE TABLE IF NOT EXISTS reference_proposals (
-                      id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                      created_at DATETIME NOT NULL,
-                      created_by VARCHAR(64) NOT NULL DEFAULT 'admin',
-                      status VARCHAR(16) NOT NULL DEFAULT 'open',
-                      reviewer VARCHAR(64) NULL,
-                      reviewed_at DATETIME NULL,
-                      title VARCHAR(190) NOT NULL DEFAULT '',
-                      body MEDIUMTEXT NULL,
-                      citations_json MEDIUMTEXT NULL,
-                      source_module VARCHAR(64) NOT NULL DEFAULT '',
-                      source_id VARCHAR(64) NOT NULL DEFAULT '',
-                      ai_meta_json MEDIUMTEXT NULL,
-                      rejection_note VARCHAR(255) NULL,
-                      PRIMARY KEY (id),
-                      KEY idx_status (status),
-                      KEY idx_created_at (created_at)
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-
-                    $url = (string)$row['url'];
-                    $title = trim((string)($row['title'] ?? ''));
-                    if ($title === '') {
-                        $title = $url;
-                    }
-                    $desc = trim((string)($row['description'] ?? ''));
-                    $body = $desc !== '' ? $desc : 'Proposed link for curation.';
-                    $citations = [[
-                        'title' => $title,
-                        'url' => $url,
-                    ]];
-
-                    $st = $pdo->prepare('INSERT INTO reference_proposals (created_at, created_by, status, title, body, citations_json, source_module, source_id, ai_meta_json) VALUES (?,?,?,?,?,?,?,?,?)');
-                    $st->execute([
-                        gmdate('Y-m-d H:i:s'),
-                        'admin',
-                        'open',
-                        $title,
-                        $body,
-                        json_encode($citations, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-                        'links',
-                        (string)$lid,
-                        null,
-                    ]);
-                    $ok = true;
-                }
-            }
-        } catch (Throwable $e) {
-            $ok = false;
-        }
-
-        if ($ok) {
-            links_notice('success', 'Proposed to Reference.');
-        } else {
-            links_notice('warning', 'Reference subsystem not available. Install/enable Reference to use proposals.');
-        }
-        header('Location: admin.php?op=links_queue');
-        exit;
-
     case 'approve':
         $lid = (int)($_GET['lid'] ?? 0);
         if ($lid > 0) {
@@ -223,14 +126,6 @@ switch ($op) {
                     echo '<td>';
                     echo '<a class="adminui-btn" href="admin.php?op=approve&lid=' . $lid . '">Approve</a> ';
                     echo '<a class="adminui-btn" href="admin.php?op=reject&lid=' . $lid . '">Reject</a> ';
-                    // Propose to Reference (human-canonized knowledge base)
-                    echo '<form method="post" action="admin.php?op=propose_reference" style="display:inline">';
-                    if (!empty($GLOBALS['csrfToken'])) {
-                        echo '<input type="hidden" name="_csrf" value="' . htmlspecialchars((string)$GLOBALS['csrfToken']) . '">';
-                    }
-                    echo '<input type="hidden" name="lid" value="' . $lid . '">';
-                    echo '<button class="adminui-btn" type="submit">Propose to Reference</button>';
-                    echo '</form> ';
                     if (\NukeCE\Ai\AiClient::enabled()) {
                         echo '<button class="adminui-btn" type="button" onclick="linksAiPreview(' . $lid . ')">AI Preview</button>';
                     }

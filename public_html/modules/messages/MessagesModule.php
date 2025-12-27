@@ -10,6 +10,7 @@ namespace NukeCE\Modules\Messages;
 
 use NukeCE\Core\ModuleInterface;
 use NukeCE\Core\Layout;
+use NukeCE\Core\Maintenance;
 use NukeCE\Forums\PrivateMessages\PrivateMessagesBridge;
 use NukeCE\Security\NukeSecurity;
 use NukeCE\Security\NukeSecurityConfig;
@@ -55,7 +56,15 @@ final class MessagesModule implements ModuleInterface
         $action = $action ?: 'inbox';
 
         if ($action === 'audit') {
-            $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0));
+            // Maintenance: disable posting actions
+        if (Maintenance::readOnlyPosting() && in_array($action, ['compose','reply','delete'], true)) {
+            Layout::page('Messages', function () {
+                echo "<h1>Messages</h1><div class='card' style='padding:14px'><b>Maintenance mode</b><p>Posting is temporarily disabled.</p></div>";
+            }, ['module'=>'messages']);
+            return;
+        }
+
+        $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0));
             $this->audit($pmId);
             return;
         }
@@ -72,14 +81,54 @@ final class MessagesModule implements ModuleInterface
             return;
         }
 
+        // Maintenance: disable posting actions
+        if (Maintenance::readOnlyPosting() && in_array($action, ['compose','reply','delete'], true)) {
+            Layout::page('Messages', function () {
+                echo "<h1>Messages</h1><div class='card' style='padding:14px'><b>Maintenance mode</b><p>Posting is temporarily disabled.</p></div>";
+            }, ['module'=>'messages']);
+            return;
+        }
+
         $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0));
         if ($action === 'view' && $pmId > 0) { $this->view($userId, $pmId); return; }
         if ($action === 'compose') { $this->compose(); return; }
         if ($action === 'send') { $this->send(); return; }
-        if ($action === 'reply') { $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->reply($pmId); return; }
-        if ($action === 'delete') { $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->delete($pmId); return; }
-        if ($action === 'markread') { $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->markRead($pmId, true); return; }
-        if ($action === 'markunread') { $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->markRead($pmId, false); return; }
+        if ($action === 'reply') { // Maintenance: disable posting actions
+        if (Maintenance::readOnlyPosting() && in_array($action, ['compose','reply','delete'], true)) {
+            Layout::page('Messages', function () {
+                echo "<h1>Messages</h1><div class='card' style='padding:14px'><b>Maintenance mode</b><p>Posting is temporarily disabled.</p></div>";
+            }, ['module'=>'messages']);
+            return;
+        }
+
+        $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->reply($pmId); return; }
+        if ($action === 'delete') { // Maintenance: disable posting actions
+        if (Maintenance::readOnlyPosting() && in_array($action, ['compose','reply','delete'], true)) {
+            Layout::page('Messages', function () {
+                echo "<h1>Messages</h1><div class='card' style='padding:14px'><b>Maintenance mode</b><p>Posting is temporarily disabled.</p></div>";
+            }, ['module'=>'messages']);
+            return;
+        }
+
+        $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->delete($pmId); return; }
+        if ($action === 'markread') { // Maintenance: disable posting actions
+        if (Maintenance::readOnlyPosting() && in_array($action, ['compose','reply','delete'], true)) {
+            Layout::page('Messages', function () {
+                echo "<h1>Messages</h1><div class='card' style='padding:14px'><b>Maintenance mode</b><p>Posting is temporarily disabled.</p></div>";
+            }, ['module'=>'messages']);
+            return;
+        }
+
+        $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->markRead($pmId, true); return; }
+        if ($action === 'markunread') { // Maintenance: disable posting actions
+        if (Maintenance::readOnlyPosting() && in_array($action, ['compose','reply','delete'], true)) {
+            Layout::page('Messages', function () {
+                echo "<h1>Messages</h1><div class='card' style='padding:14px'><b>Maintenance mode</b><p>Posting is temporarily disabled.</p></div>";
+            }, ['module'=>'messages']);
+            return;
+        }
+
+        $pmId = (int)($segments[1] ?? ($_GET['id'] ?? 0)); $this->markRead($pmId, false); return; }
 
         $this->inbox($userId);
     }
