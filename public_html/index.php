@@ -21,6 +21,5 @@ if ($env !== 'prod') {
     ini_set('display_errors', '0');
 }
 
-$manager = new ModuleManager(NUKECE_ROOT . '/modules');
-$router = new Router($manager);
+$router = new Router();
 $router->dispatch();
