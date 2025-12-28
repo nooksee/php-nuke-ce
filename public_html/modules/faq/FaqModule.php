@@ -1,44 +1,28 @@
 <?php
+declare(strict_types=1);
 /*
  * PHP-Nuke CE (Community Edition / Custom Edition)
  * Project name in-code: nukeCE
+ *
+ * NOTE: This is a stub module.
  */
 
 namespace NukeCE\Modules\Faq;
 
 use NukeCE\Core\ModuleInterface;
-use NukeCE\Core\Model;
-use PDO;
+use NukeCE\Core\Layout;
 
-/**
- * FAQ module displays frequently asked questions.
- */
-class FaqModule extends Model implements ModuleInterface
+final class FaqModule implements ModuleInterface
 {
-    public function getName(): string
-    {
-        return 'faq';
-    }
+    public function getName(): string { return 'faq'; }
 
     public function handle(array $params): void
     {
-        $pdo = $this->getConnection();
-        $stmt = $pdo->query('SELECT id, question, answer FROM faq ORDER BY id ASC');
-        $faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>FAQ</title></head><body>';
-        echo '<h1>Frequently Asked Questions</h1>';
-        if ($faqs) {
-            echo '<ul>';
-            foreach ($faqs as $faq) {
-                $q = htmlspecialchars($faq['question']);
-                $a = nl2br(htmlspecialchars($faq['answer']));
-                echo '<li><strong>' . $q . '</strong><br><span>' . $a . '</span></li>';
-            }
-            echo '</ul>';
-        } else {
-            echo '<p>No FAQs available.</p>';
-        }
-        echo '<p><a href="/index.php">Back to home</a></p>';
-        echo '</body></html>';
+        Layout::header('Faq');
+        echo '<h1>Faq</h1>';
+        echo '<div class="nukece-card">';
+        echo '<p>This feature is shipped as an add-on. Enable/install it from repo-root /addons.</p>';
+        echo '</div>';
+        Layout::footer();
     }
 }
