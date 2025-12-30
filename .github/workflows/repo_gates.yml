@@ -1,0 +1,19 @@
+name: repo-gates
+
+on:
+  pull_request:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify tree
+        run: bash tools/verify_tree.sh
+
+      - name: Truth lint (authored surfaces)
+        run: bash tools/repo/lint_truth.sh
