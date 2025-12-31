@@ -2,6 +2,8 @@
 
 nukeCE is an explainability-first, provenance-forward CMS program.
 
+![repo-gates](https://github.com/nooksee/php-nuke-ce/actions/workflows/repo_gates.yml/badge.svg)
+
 ## Repo map (start here)
 - `public_html/` — deployable webroot (what the server serves)
 - `src/` — nukeCE core source (primary development)
