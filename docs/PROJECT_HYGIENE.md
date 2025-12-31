@@ -1,13 +1,20 @@
-# Keep non-public content out of public_html
+# Project hygiene
 
-This directory is intended to be served by your web server.
+This repository is structured to keep deployable code, tooling, and documentation cleanly separated.
 
-Do NOT place these here:
-- transcripts
-- canon decisions
-- claim registry
-- reference nodes
-- boot packs
-- raw documentation dumps
+## Boundaries
 
-Keep those under `_meta/`.
+- `public_html/` is **deployable**. Treat it as production-facing.
+- Everything else is **non-deployable** by default (docs, tooling, storage, donor inputs).
+
+## Governance
+
+- Work happens on `work/*` branches.
+- Merges happen by PR only.
+- Required checks (repo-gates) must pass before merge.
+
+## Hygiene rules
+
+- Avoid committing machine-specific paths, hostnames, or personal identifiers into docs/config.
+- Keep PRs small and scoped.
+- Prefer repo-relative paths (e.g., `public_html/includes`) in documentation.

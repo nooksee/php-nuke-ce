@@ -1,11 +1,34 @@
-# Repo Nomenclature & Structure
+# Repo nomenclature
 
-Directory naming:
-- lowercase folders: `src/`, `docs/`, `scripts/`, `upstream/`
-- use underscores only when needed (legacy compatibility): `public_html/`
+This document standardizes names used across issues, branches, PRs, and docs.
 
-Rules:
-- `public_html/` is deploy root
-- `src/` is the product
-- `upstream/` is read-only donor snapshots
-- `packages/` is the import/adaptation staging area
+## Primary surfaces
+
+**Current:**
+- `public_html/` — deployable webroot (what the server serves)
+- `tools/` — repo gates + verification tooling
+- `docs/` — operator docs and governance
+- `upstream/` — donor snapshots (read-only posture)
+
+**Planned / evolving:**
+- `src/` — nukeCE core source (primary development surface once extracted)
+- `packages/` — imported features adapted into nukeCE
+
+## Branch naming
+
+- Work branches: `work/<topic>-YYYY-MM-DD`
+- Never work directly on `main`.
+
+## PR naming
+
+- Title: concise, imperative, scoped to the change.
+- Prefer one topic per PR.
+
+## Commit prefixes (suggested)
+
+- `docs:` documentation-only
+- `ci:` automation / workflows
+- `chore:` repo hygiene, non-functional
+- `feat:` new capability
+- `fix:` bug fix
+- `refactor:` structural change (no behavior change intended)

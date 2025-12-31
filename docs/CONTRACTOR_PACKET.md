@@ -1,16 +1,33 @@
-# Contractor Packet (One Page)
+# Contractor packet (read-in)
 
-## Read first
-- README.md
-- docs/SOP_MULTICHAT.md
-- boot/ (bootpack rules)
+This pack is the minimum you need to work safely in the nukeCE repository.
 
-## Hard constraints
-- Do not edit upstream/ or boot/_upstream_runtime/
-- Do not commit private/local artifacts
-- Do not rename modules/paths without an explicit Decision/ADR
+## Non-negotiables
 
-## Definition of done
-- `bash tools/verify_tree.sh` passes
-- change is scoped
-- docs updated if a contract changed
+- **No direct pushes to `main`.**
+- Work on `work/*` branches → PR → gates green → merge.
+- Keep donor snapshots in `upstream/` read-only posture.
+- If you are unsure: stop and ask. Do not guess.
+
+## How we review
+
+- The maintainer reviews changes **visually in NetBeans** before merge.
+- Automation (repo-gates) verifies tree structure + truth lint rules.
+
+## Before you start
+
+1. Read:
+   - `docs/ops/DAILY_COCKPIT.md`
+   - `docs/PROJECT_HYGIENE.md`
+   - `docs/upstreams.md`
+
+2. Confirm you can:
+   - create a `work/*` branch,
+   - run the gates locally,
+   - open a PR and wait for CI gates.
+
+## Output expectations
+
+- Small PRs, clear commit messages.
+- No hidden changes.
+- Document provenance when importing/adapting external code.
