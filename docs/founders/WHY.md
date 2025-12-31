@@ -1,20 +1,16 @@
-# Why PHP-Nuke CE Exists
+# Founder's why
 
-PHP-Nuke CE exists because software has memory — and most projects forget it.
+nukeCE exists to make legacy CMS systems **explainable, governable, and safe to modernize**.
 
-PHP-Nuke proved a CMS could be understandable, community-owned, and modular without burying admins in ceremony.
+Most CMS work fails for the same reason: *teams lose the thread*.
+Changes land without provenance, assumptions harden into “facts,” and the system becomes impossible to reason about.
 
-Over time, the CMS space split into two failures:
-- legacy systems frozen in time
-- modern systems that hide responsibility behind layers
+nukeCE is a counter-move:
 
-PHP-Nuke CE is a continuation edition — not a rewrite, not a museum, not a fork dump.
+- **Explainability-first:** the repo should explain itself to a new operator.
+- **Provenance-forward:** imported code and decisions are tracked and reviewable.
+- **Governance-by-default:** PR-only merges + required gates + minimal “hero pushes”.
+- **Modern operations on a legacy base:** stabilize first, then upgrade by surfaces.
 
-We preserve legacy expectations where they still serve people, and we modernize only with explicit, explainable reasons.
-
-This is a CMS for administrators who want confidence instead of mystery, and for communities that want continuity without stagnation.
-
-Modern software should not erase its past. And legacy software should not be trapped by it.
-Modern software should not erase its past. And legacy software should not be trapped by it.
-
-PHP-Nuke CE exists to prove both can be true.
+If we do this right, a newcomer should open the repo and feel:
+“Someone serious runs this place.”

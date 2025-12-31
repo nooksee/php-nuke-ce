@@ -1,4 +1,4 @@
-# User Profile — Kevin Thomas (operational)
+# User Profile — Project Maintainer (operational)
 
 These notes exist to reduce “re-explain tax” and keep collaboration aligned.  
 They are **not** medical or clinical claims; they reflect observed working preferences from project conversations.
@@ -26,3 +26,6 @@ They are **not** medical or clinical claims; they reflect observed working prefe
 - Large, undifferentiated dumps (transcripts, overlong summaries)
 - Silent promotion of chat into canon
 - Speculation presented as settled fact
+
+
+> If you keep private preferences or personal identifiers, store them outside the public repo.
