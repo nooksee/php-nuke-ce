@@ -24,3 +24,6 @@ storage/_scratch/
 nbproject/
 .idea/
 .vscode/
+
+# NetBeans (machine-specific)
+nbproject/private/
