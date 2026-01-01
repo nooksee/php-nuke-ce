@@ -26,14 +26,6 @@ If a change can’t explain itself, it doesn’t ship. 🔒
 - **PR-only governance.** No direct pushes to `main`. Ever. (Yes, even for admins.)
 - **Repo-gates are the front door.** If gates fail, we fix gates or the change — not the rules.
 
-### The quick map (start here)
-- `public_html/` — deployable webroot (what the server serves)
-- `src/` — nukeCE core source (primary development)
-- `packages/` — extracted/imported features adapted into nukeCE
-- `upstream/` — read-only donor snapshots (do not edit)
-- `docs/` — documentation, governance, release process, truth layers
-- `scripts/` — build/sync/release tooling
-
 ### Working style (the human layer)
 - NetBeans-first for review and confidence.
 - Terminal commands are **small, deliberate, and one-at-a-time**.
