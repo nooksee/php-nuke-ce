@@ -26,35 +26,18 @@ Copilot does NOT merge and does NOT work on `main`.
 
 ---
 
-## What Copilot should do
+## Workflow (safe)
 
-✅ Good tasks:
-- Doc-only PR slices (indexing, clarity, missing links, naming consistency)
-- Diff proposals for small file edits
-- Suggesting safe refactors with explicit impact notes
-
-❌ Not allowed:
-- Merging PRs
-- Editing on `main`
-- Inventing files/paths/structure
-- Touching `upstream/`
+1) Copilot proposes a *small* change set (1 purpose).
+2) Operator reviews visually in NetBeans (diff + tree impact).
+3) Run repo-gates (CI) via PR checks.
+4) Merge only when green.
 
 ---
 
-## Required output format (must follow)
+## PR slicing rules
 
-- Summary (3 bullets max)
-- Files touched (exact paths)
-- Proposed PR title
-- Diff-style suggestions (preferred) OR exact replacement blocks
-- Risks / collisions
-- Verification checklist (how Operator confirms in NetBeans + gates)
-
----
-
-## Operator’s operator quirks (respect these)
-
-- NetBeans is the Truth Cockpit; propose changes that are easy to review visually.
-- Terminal paste can auto-run; keep commands minimal and staged.
-- Prefer conservative, boring improvements over clever rewrites.
-
+- Prefer 1–3 file touches per PR when possible.
+- Separate “rename/move” PRs from “behavior change” PRs.
+- Documentation/governance PRs must say so clearly.
+- Avoid “drive-by refactor
