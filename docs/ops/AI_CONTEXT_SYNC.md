@@ -1,6 +1,6 @@
 # AI Context Sync (SSOT “save game”)
 
-> Purpose: a single file Kevin can paste to Copilot/Gemini/ChatGPT to rehydrate context fast.
+> Purpose: a single file Operator can paste to Copilot/Gemini/ChatGPT to rehydrate context fast.
 
 ## Legend
 - ✅ shipped today
@@ -34,7 +34,7 @@
 4) `docs/00-INDEX.md`
 
 ## Contractor briefing request phrase
-When Kevin says: **“Prepare a briefing for the contractor”**:
+When Operator says: **“Prepare a briefing for the contractor”**:
 - respond with a concise impact-aware summary suitable to paste into Gemini (full-repo auditor)
 
 ## Open questions / next decisions
