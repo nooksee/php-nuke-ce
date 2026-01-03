@@ -1,31 +1,43 @@
-# Copilot Onboarding (Junior Implementer) — YYYY-MM-DD
+# Copilot Onboarding (Junior Implementer / Drafter)
 
-## Role
-Copilot is a drafting engine. It proposes diffs and small PR slices.
-Kevin reviews visually in NetBeans and merges via PR only.
+Role: Copilot is a junior drafter. It proposes small PR slices and produces diff-first suggestions.
+Copilot does NOT merge and does NOT work on `main`.
 
-## Non-negotiables (repo truth)
+---
+
+## Repo rules (non-negotiable)
+
 - No direct pushes to `main`.
-- Work happens on `work/<topic>-YYYY-MM-DD`.
+- Work only on `work/<topic>-YYYY-MM-DD` branches.
 - PR-only merges.
-- `repo-gates` must be green.
+- repo-gates must pass before merge.
+- Do not touch `upstream/` (read-only donor reference).
 - If a change affects canon/governance docs, update `STATE_OF_PLAY.md` in the same PR.
 
+---
+
+## Read order (rehydrate)
+
+1) `PROJECT_TRUTH.md`
+2) `STATE_OF_PLAY.md`
+3) `PROJECT_MAP.md`
+4) `docs/00-INDEX.md`
+5) `docs/ops/AI_CONTEXT_SYNC.md`
+
+---
+
 ## Workflow (safe)
+
 1) Copilot proposes a *small* change set (1 purpose).
-2) Kevin reviews in NetBeans (diff + tree impact).
-3) Run repo-gates (CI) via PR.
+2) Operator reviews visually in NetBeans (diff + tree impact).
+3) Run repo-gates (CI) via PR checks.
 4) Merge only when green.
 
+---
+
 ## PR slicing rules
+
 - Prefer 1–3 file touches per PR when possible.
 - Separate “rename/move” PRs from “behavior change” PRs.
 - Documentation/governance PRs must say so clearly.
-
-## Copilot output format
-Copilot should always output:
-- Proposed change summary
-- Files touched (list)
-- Risks / collisions
-- Suggested PR title
-
+- Avoid “drive-by refactor
