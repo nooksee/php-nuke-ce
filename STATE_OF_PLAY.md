@@ -1,3 +1,15 @@
+## 2026-01-04
+
+### Completed
+- Added GitHub PR description automation via `.github/pull_request_template.md`.
+- Added canonical PR description template: `docs/ops/PR_DESCRIPTION_TEMPLATE.md`.
+- Added triage capture lane: `docs/triage/INBOX.md`.
+- Updated docs indexes to keep ops + triage discoverable.
+
+### Notes / Decisions
+- Doctrine: “Every PR is self-documenting and nothing gets forgotten.”
+- Forward-only metadata discipline: we don’t backfill old PR bodies unless it’s actively hurting us.
+
 # State of Play — 2026-01-03
 
 ## Completed

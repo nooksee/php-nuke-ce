@@ -1,6 +1,12 @@
-# PR Description (required)
+# PR Description Template (canonical)
 
-> Objective: every PR is self-documenting and reversible.
+Purpose: Ensure every PR is self-documenting, reviewable, and reversible.
+
+Use this template in:
+- GitHub PR description (auto-filled via .github/pull_request_template.md)
+- Any work handoff to assistants/contractors (copy/paste)
+
+---
 
 ## Why (the problem / goal)
 
@@ -21,3 +27,4 @@
 - [ ] Updated STATE_OF_PLAY.md in the same PR (if applicable)
 
 ## Notes (optional)
+
