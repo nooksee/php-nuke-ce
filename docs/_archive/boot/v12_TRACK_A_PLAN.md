@@ -2,9 +2,9 @@
 Generated: 2025-12-27T00:03:45.664034Z
 
 ## Inputs
-- `boot/docs/triage/SUBSYSTEM_MAP_v11.md`
-- `boot/docs/triage/ADMIN_MODULE_AUDIT_v11.md`
-- `boot/docs/triage/SECURITY_SURFACE_SWEEP_v11.md`
+- `docs/triage/_archive/SUBSYSTEM_MAP_v11.md`
+- `docs/triage/_archive/ADMIN_MODULE_AUDIT_v11.md`
+- `docs/triage/_archive/SECURITY_SURFACE_SWEEP_v11.md`
 
 ## Goals (acceptance criteria)
 1. **Module loadability:** every module directory under `public_html/modules/` has a `*Module.php` file matching ModuleManager expectations.
@@ -22,5 +22,5 @@ Generated: 2025-12-27T00:03:45.664034Z
 - This affects HTTP access only (does not break PHP includes).
 
 ### C) Documentation embedding
-- Keep triage docs in `boot/docs/triage/`.
+- Keep triage docs in `docs/triage/_archive/`.
 - Add v12 plan + release notes.

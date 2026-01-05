@@ -11,7 +11,7 @@ traceable, and merge-safe.
 - repo-gates must be green before merge.
 - `STATE_OF_PLAY.md` is required for every PR (same PR).
 
-## Guerrilla Metadata Surfaces (always-on) — required
+## Metadata Surfaces (always-on) — required
 Every PR must include the following sections, with no blanks:
 - Purpose
 - What shipped

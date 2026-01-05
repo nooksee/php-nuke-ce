@@ -27,7 +27,7 @@ Baseline: v21
 ## Scaffolded / partial
 - Data feeds schema + docs:
   - `public_html/install/datafeeds.sql`
-  - `boot/docs/DATA_FEEDS.md`
+  - `docs/DATA_FEEDS.md`
 
 ## Vision (not yet implemented)
 - GeoIP CSV importer UI with progress

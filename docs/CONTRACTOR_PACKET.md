@@ -18,7 +18,7 @@ This pack is the minimum you need to work safely in the nukeCE repository.
 
 1. Read:
    - `docs/ops/DAILY_COCKPIT.md`
-   - `docs/PROJECT_HYGIENE.md`
+   - `docs/40-PROJECT_HYGIENE.md`
    - `docs/upstreams.md`
 
 2. Confirm you can:
