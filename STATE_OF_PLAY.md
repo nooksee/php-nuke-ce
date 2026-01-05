@@ -1,3 +1,19 @@
+## 2026-01-05 — Docs: consolidate boot docs into docs/ + terminology sweep
+
+- Purpose: Eliminate split-brain docs and standardize metadata terminology.
+- What shipped:
+  - Moved boot docs into `docs/` (including archives and triage archive), removing duplicates in the former boot docs location.
+  - Updated indexes and references (`docs/00-INDEX.md`, `docs/CONTRACTOR_PACKET.md`, `boot/active/boot_pack/context_pack.json`).
+  - Standardized docs terminology to “Metadata Surfaces (always-on)”.
+- Verification:
+  - Link/reference grep (boot-docs references) ✅
+  - Terminology grep (Guerrilla) ✅
+  - bash tools/verify_tree.sh ✅
+  - bash tools/repo/lint_truth.sh ✅
+- Risk / rollback:
+  - Risk: link-rot in moved docs or missed references.
+  - Rollback: revert merge commit
+
 ## 2026-01-05 — Docs: contractor dispatch brief (canonize worker dispatch)
 
 - Purpose: Canonize contractor dispatch rules so every PR follows governance + metadata requirements.

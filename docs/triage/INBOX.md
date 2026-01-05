@@ -16,7 +16,7 @@ Rule: If it’s not linked from an index OR listed here, it’s drift.
 
 ---
 
-## Pinned doctrine: Guerrilla Metadata Surfaces (always-on)
+## Pinned doctrine: Metadata Surfaces (always-on)
 
 **Rule:** If a field exists, we fill it — minimally but meaningfully.  
 **Goal:** faster work, less re-explaining, stronger repo narrative, better future-us.
