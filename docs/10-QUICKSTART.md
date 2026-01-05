@@ -2,11 +2,19 @@
 
 This repo is governed. The fastest way to succeed here is to follow the rules *exactly*.
 
-## Start here (read in this order)
+## First steps (read in this order)
 1) `PROJECT_TRUTH.md`
 2) `STATE_OF_PLAY.md`
 3) `PROJECT_MAP.md`
 4) `docs/00-INDEX.md`
+5) `docs/ops/DAILY_COCKPIT.md`
+6) `docs/ops/CONTRACTOR_DISPATCH_BRIEF.md`
+
+## Workflow doctrine (non-negotiable)
+- One slice per PR.
+- Green checks before merge (repo-gates).
+- Metadata Surfaces (always-on): Purpose / What shipped / Verification / Risk+Rollback.
+- If there’s a PR, there’s a `STATE_OF_PLAY.md` entry.
 
 ## The only workflow we use (PR-only)
 **Rule:** No direct pushes to `main`. Ever.
@@ -45,4 +53,3 @@ Examples:
 - **Pull:** Team → Remote → Pull…
 
 If anything feels risky: stop and read `STATE_OF_PLAY.md` again. That file is the truth of “what’s real today”.
-

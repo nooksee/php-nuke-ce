@@ -1,7 +1,7 @@
 # Docs — index
 
 ## Start here
-- [START_HERE.md](START_HERE.md)
+- [10-QUICKSTART.md](10-QUICKSTART.md)
 - [README_CONTEXT.md](README_CONTEXT.md)
 
 ## Operating system (ops)

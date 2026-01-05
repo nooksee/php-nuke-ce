@@ -1,23 +1,23 @@
-# Repo layout (high-level)
+# Repo layout - operating zones
 
-This is the “what goes where” map that contractors can understand in 90 seconds.
+This is the "what goes where" map for current operations.
 
-## Top-level
+## Operating zones
+- Runtime: `public_html/` only. Everything here is deployable.
+- Governance and docs: `.github/` and `docs/`.
+- Boot and context: `boot/` (Context Pack and resurrection materials).
+- Tooling and verification: `tools/` and `tests/`.
+- Donor and optional inputs: `upstream/`, `addons/`, and `patches/`.
+- Local-only storage: `storage/`.
 
-- `public_html/` — deployable webroot (what the server serves)
-- `src/` — nukeCE core source (primary development)
-- `packages/` — extracted/imported features adapted into nukeCE
-- `upstream/` — read-only donor snapshots (do not edit)
-- `docs/` — governance, architecture, ops, and contributor docs
-- `boot/` — “Lazarus Pit” materials (resurrection prompts + context pack)
-- `tools/` — repo gates and safety scripts
-
-## Key docs
-
-- `README.md` — project front door
-- `PROJECT_MAP.md` — where to work / what is what
-- `PROJECT_TRUTH.md` — truth-layer rules (what counts as “real”)
-- `STATE_OF_PLAY.md` — current state + near-term priorities
-- `CANONICAL_TREE.md` — canonical tree / structure expectations
-- `docs/ops/INDEX.md` — ops index (“how we operate”)
-- `docs/ops/DAILY_COCKPIT.md` — the daily NetBeans-first cockpit plan
+## Top-level directories (current)
+- `.github/` - CI workflows, governance templates, and repo policy automation.
+- `addons/` - optional legacy or extra modules not required for core runtime.
+- `boot/` - Context Pack materials and resurrection docs; non-runtime.
+- `docs/` - canonical documentation and operating guides.
+- `patches/` - optional patch queue; keep small and explicit.
+- `public_html/` - deployable webroot and runtime code/assets.
+- `storage/` - local dev storage; not deployed.
+- `tests/` - test scaffolding and fixtures.
+- `tools/` - repo-gates and verification scripts.
+- `upstream/` - read-only donor snapshots.

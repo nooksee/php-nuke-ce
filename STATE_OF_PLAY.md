@@ -1,3 +1,35 @@
+## 2026-01-05 — Docs: onboarding refresh single entry point (T-DOCS-REFRESH)
+
+- Purpose: Align onboarding docs to repo reality and make Quickstart the canonical entry point.
+- What shipped:
+  - Made `docs/10-QUICKSTART.md` the single onboarding guide with doctrine + ops links.
+  - Replaced `docs/START_HERE.md` with a pointer; updated `README.md`, `CONTRIBUTING.md`, and `docs/00-INDEX.md`.
+  - Refreshed context and structure docs to match current top-level folders.
+- Verification:
+  - grep -r "_meta/" docs/ (hits in `docs/SECURE_WEBROOT_OPTION.md` and `docs/_archive/boot/NUKECE_PATHS.md`)
+  - grep -r "boot_pack_v2" docs/ (no matches)
+  - grep -r "src/" docs/ README.md CONTRIBUTING.md (hits in `docs/upstreams.md`, `docs/NUKESECURITY_VISION_TO_IMPLEMENTATION_MAP.md`, `docs/GEOIP_IMPORTER.md`, `docs/triage/_archive/SUBSYSTEM_MAP_v11.md`, `docs/triage/_archive/SECURITY_SURFACE_SWEEP_v11.md`, `docs/_archive/boot/v19_STORAGE_PATHS.md`, `docs/repo-nomenclature.md`)
+  - bash tools/verify_tree.sh ✅
+  - bash tools/repo/lint_truth.sh ✅
+- Risk / rollback:
+  - Risk: onboarding expectations may still conflict with older archived docs.
+  - Rollback: revert merge commit
+
+## 2026-01-05 — Docs: front door refresh (T-DOCS-FRONTDOOR-REFRESH)
+
+- Purpose: Align front-door docs with current repo reality and workflow.
+- What shipped:
+  - Rewrote front-door docs for the current Context Pack location and workflow.
+  - Updated project structure and repo layout to match current top-level directories.
+  - Reinforced Metadata Surfaces (always-on) in the entrypoint workflow.
+- Verification:
+  - grep -r "_meta/" docs/ (hits in `docs/SECURE_WEBROOT_OPTION.md` and `docs/_archive/boot/NUKECE_PATHS.md`)
+  - grep -r "boot_pack_v2" docs/ (no matches)
+  - bash tools/verify_tree.sh ✅
+- Risk / rollback:
+  - Risk: onboarding expectations may still conflict with older non-archive docs.
+  - Rollback: revert merge commit
+
 ## 2026-01-05 — Docs: consolidate boot docs into docs/ + terminology sweep
 
 - Purpose: Eliminate split-brain docs and standardize metadata terminology.
