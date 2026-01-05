@@ -1,23 +1,11 @@
-# PR Description (required)
+## Purpose
 
-> Objective: every PR is self-documenting and reversible.
+## What shipped
 
-## Why (the problem / goal)
+## Scope
 
-## What (what changed)
+## Verification
 
-## Scope (exact paths/files touched)
+## Risk+Rollback
 
-## Risk (3 bullets max)
-
-## Verification (yes/no checks)
-- [ ] NetBeans visual review (yes/no):
-- [ ] repo-gates passed (yes/no):
-- [ ] state-of-play-policing passed (yes/no):
-
-## Rollback plan
-
-## Canon updates (required when you change doctrine/governance)
-- [ ] Updated STATE_OF_PLAY.md in the same PR (if applicable)
-
-## Notes (optional)
+## Canon updates

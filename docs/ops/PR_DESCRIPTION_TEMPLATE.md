@@ -8,23 +8,24 @@ Use this template in:
 
 ---
 
-## Why (the problem / goal)
+If a field exists, fill it minimally but meaningfully.
 
-## What (what changed)
+## Purpose
+- One sentence on the goal or problem.
 
-## Scope (exact paths/files touched)
+## What shipped
+- Bullet list of concrete changes (file-level is fine).
 
-## Risk (3 bullets max)
+## Scope
+- Exact paths/files touched.
 
-## Verification (yes/no checks)
-- [ ] NetBeans visual review (yes/no):
-- [ ] repo-gates passed (yes/no):
-- [ ] state-of-play-policing passed (yes/no):
+## Verification
+- repo-gates (pass/fail + notes).
+- Manual checks (if any).
 
-## Rollback plan
+## Risk+Rollback
+- Risk: top risk in one line.
+- Rollback: revert merge commit.
 
-## Canon updates (required when you change doctrine/governance)
-- [ ] Updated STATE_OF_PLAY.md in the same PR (if applicable)
-
-## Notes (optional)
-
+## Canon updates
+- Updated `STATE_OF_PLAY.md` when doctrine/governance changes.

@@ -1,3 +1,17 @@
+## 2026-01-05 — Ops: metadata surfaces templates (T-OPS-METADATA-TEMPLATES)
+
+- Purpose: Institutionalize “Metadata Surfaces (always-on)” templates across PR and contractor workflows.
+- What shipped:
+  - Updated PR description templates in `docs/ops/PR_DESCRIPTION_TEMPLATE.md` and `.github/pull_request_template.md`.
+  - Hardened contractor dispatch requirements in `docs/ops/CONTRACTOR_DISPATCH_BRIEF.md`.
+- Verification:
+  - grep -r "Guerrilla" docs/ .github/ (no matches)
+  - bash tools/verify_tree.sh ✅
+  - bash tools/repo/lint_truth.sh ✅
+- Risk / rollback:
+  - Risk: docs-only (no runtime behavior changes)
+  - Rollback: revert merge commit
+
 ## 2026-01-05 — Docs: onboarding refresh single entry point (T-DOCS-REFRESH)
 
 - Purpose: Align onboarding docs to repo reality and make Quickstart the canonical entry point.
