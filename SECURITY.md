@@ -1,26 +1,66 @@
-# Security Policy
+# Security Policy (nukeCE)
 
-If you believe you’ve found a security issue: thank you. Seriously. 🙏  
-Now please don’t post it publicly yet.
+This repo values clarity over obscurity and explainable ops. Security work should be
+traceable, auditable, and easy to reason about.
 
-## Preferred reporting method
-- Use a **GitHub Security Advisory** for this repository (preferred), or
-- Email the maintainer if an advisory isn’t possible
+For extended guidance, see `docs/security/README.md`.
 
-## What to include
-- A clear description of the issue
-- Reproduction steps or a proof-of-concept (safe and minimal)
-- Affected files / versions (if known)
-- Suggested fix or mitigation (optional, but appreciated)
+## Roles and access expectations
 
-## Please do not
-- Open a public issue with exploit details
-- Post reproduction steps in Discussions or PR comments
+Operator (human):
+- Owns final decisions and approvals.
+- Performs commits, pushes, and merges.
+- Manages secrets and access tokens.
+- Ensures repo-gates are green before merge.
 
-## Scope notes
-- This project contains legacy surfaces. We prioritize fixes that:
-  - reduce exploitability,
-  - improve containment,
-  - and preserve explainability/provenance.
+AI workers (Codex, Gemini, Copilot):
+- Draft changes only; no commit/push.
+- Work within the assigned scope and cite sources/provenance.
+- No direct access to secrets or privileged credentials.
 
-We’ll respond as soon as practical, and we’ll aim to coordinate disclosure responsibly.
+Worker rule: AI workers do not commit or push code. Humans do.
+See `docs/ops/CONTRACTOR_DISPATCH_BRIEF.md` and `docs/ops/OUTPUT_FORMAT_CONTRACT.md`.
+
+## Secrets management
+
+- Never commit secrets, API keys, or credentials to the repo.
+- Use environment variables or a local secrets manager for sensitive values.
+- If a secret is exposed, rotate it and document the remediation.
+
+## AI usage policy
+
+- AI assistance is allowed with human oversight.
+- All AI-proposed changes must be reviewed by a human operator.
+- Provide citations/provenance for external sources or non-trivial claims.
+
+## Reporting vulnerabilities
+
+Preferred:
+- Use a GitHub Security Advisory for this repository.
+
+If you cannot use GitHub Security Advisories:
+- Contact the repository owners via GitHub and request a private channel.
+- Do not disclose details publicly until coordinated.
+
+When reporting, include:
+- A clear description of the issue.
+- Minimal reproduction steps or proof-of-concept.
+- Affected files/versions (if known).
+- Suggested mitigations (optional, appreciated).
+
+## Handling and disclosure
+
+- We will acknowledge reports as soon as practical.
+- Fixes are prioritized by impact, exploitability, and clarity.
+- We aim for coordinated, responsible disclosure.
+
+## Known issues and future improvements
+
+- Legacy code paths include MD5 hashing that should be upgraded.
+- Legacy upstream snapshots contain outdated patterns pending modernization.
+
+## Related docs
+
+- `docs/security/README.md`
+- `docs/ops/CONTRACTOR_DISPATCH_BRIEF.md`
+- `docs/ops/OUTPUT_FORMAT_CONTRACT.md`

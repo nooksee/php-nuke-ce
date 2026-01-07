@@ -10,6 +10,10 @@ Source of truth for onboarding and workflow: `docs/10-QUICKSTART.md`.
 - Every PR must pass **repo-gates**.
 - Upstream snapshots in `upstream/` are **read-only donor history**.
 
+## Security policy
+See `SECURITY.md` for reporting guidance and security posture.
+Do not commit secrets to the repo.
+
 ## The standard workflow (NetBeans-first)
 1) Create a branch
 - Name format: `work/<topic>-YYYY-MM-DD`
