@@ -5,6 +5,7 @@ Define the save/retain procedure for critical artifacts.
 
 ## Scope
 Applies to outputs required for ICL handoff.
+Trigger: At end of any session resulting in a code change OR canon/process decision.
 
 ## Verification
 - Not run (operator): confirm save targets.

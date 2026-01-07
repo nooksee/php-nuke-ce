@@ -3,7 +3,7 @@
 ## Purpose
 Define required behaviors for ICL participants.
 
-First response must repeat back: (a) No invention, (b) No commit/push, (c) Opt-in repo knowledge.
+First response must repeat back the exact phrases: "opt-in repo knowledge" and "no commit/push." Include "no invention" in the same response.
 
 ## Scope
 Applies to operators and AI workers during initialization.

@@ -1,3 +1,19 @@
+## 2026-01-07 — ICL-001B — Context packer + trigger hardening
+
+- Purpose: Reduce Operator fatigue and drift risk with a deterministic ICL context packer and hardened triggers.
+- What shipped:
+  - Added `ops/init/pack.sh` to emit a paste-ready ICL deck in a fixed order.
+  - Added a trigger to the Save This protocol and introduced the new Snapshot protocol (with guidance on optional PDF archives).
+  - Tightened the INIT_CONTRACT repeat-back requirements for "opt-in repo knowledge" and "no commit/push".
+- Verification:
+  - `bash tools/verify_tree.sh` ✅
+  - `bash tools/repo/lint_truth.sh` ✅
+  - `bash ops/init/pack.sh --help` ✅
+  - `bash ops/init/pack.sh | head` ✅
+- Risk / rollback:
+  - Risk: pack output order or content may need adjustments as ICL grows.
+  - Rollback: revert `ops/init/pack.sh` and the protocol wording updates.
+
 ## 2026-01-07 — Ops: ICL init skeleton (ICL-001A)
 
 - Purpose: Establish the canonical ops/init skeleton for ICL and role setup.
