@@ -9,4 +9,4 @@ Design:
 - Full audit logging
 - AI-assisted diff summaries (future)
 
-This module restores and modernizes the spirit of NukeSentinel's update system.
+Historical notes on NukeSentinel-era updates live in `docs/_archive/SECURITY_LEGACY_NOTES.md`.

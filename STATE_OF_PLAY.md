@@ -1,3 +1,18 @@
+## 2026-01-06 — Docs: security posture refresh (T-DOCS-SECURITY-REFRESH)
+
+- Purpose: Consolidate security posture guidance and clarify AI/worker boundaries.
+- What shipped:
+  - Expanded `SECURITY.md` with roles, AI policy, secrets guidance, reporting, and known issues.
+  - Added `docs/security/README.md` as the detailed security reference and cross-links.
+  - Archived a legacy NukeSentinel reference and updated `docs/DATA_FEEDS.md`.
+  - Linked `CONTRIBUTING.md` to the security policy.
+- Verification:
+  - Not run (worker): `bash tools/verify_tree.sh`
+  - Not run (worker): `bash tools/repo/lint_truth.sh`
+- Risk / rollback:
+  - Risk: docs-only (security guidance changes).
+  - Rollback: revert this entry and the docs updates.
+
 ## 2026-01-06 — Ops: control room index + preflight (T-OPS-OPS-STREAMLINE)
 
 - Purpose: Make ops docs feel like a control room with a clear start and preflight checklist.
