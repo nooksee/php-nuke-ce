@@ -40,6 +40,7 @@ E) Draft Merge-note comment (markdown, same structure)
 F) Confirm: NO COMMIT, NO PUSH performed
 
 REQUIRED METADATA SURFACES
+Each surface MUST be delivered as header + fenced block.
 - IDE commit subject line
 - PR title
 - PR markdown description
