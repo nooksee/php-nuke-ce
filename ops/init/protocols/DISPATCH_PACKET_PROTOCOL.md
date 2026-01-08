@@ -43,3 +43,6 @@ Every DP must include all metadata surfaces:
 - Merge commit subject
 - Merge commit extended description
 - Merge-note comment
+
+## Metadata kit presentation rule (required)
+Each metadata surface must be presented as a plain-text header followed by a fenced code block for copy/paste safety. This is mandatory for DP delivery and operator edits.

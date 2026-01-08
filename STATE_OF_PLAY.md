@@ -1,3 +1,17 @@
+## 2026-01-08 — ICL-001K: metadata kit formatting canonized
+
+- Purpose: Canonize metadata kit presentation rules for operator-facing outputs.
+- What shipped:
+  - Updated `ops/init/icl/OCL_OVERVIEW.md`.
+  - Updated `ops/init/protocols/DISPATCH_PACKET_PROTOCOL.md`.
+  - Updated `ops/templates/DISPATCH_PACKET_TEMPLATE.md`.
+- Verification:
+  - `bash tools/verify_tree.sh` ✅
+  - `bash tools/repo/lint_truth.sh` ✅
+- Risk / rollback:
+  - Risk: formatting rules may require adjustment as metadata kits evolve.
+  - Rollback: revert the overview/protocol/template edits.
+
 ## 2026-01-07 — ICL-001J: remove deprecated Daily Cockpit template
 
 - Purpose: Remove deprecated Daily Cockpit template now replaced by the session snapshot artifact.
