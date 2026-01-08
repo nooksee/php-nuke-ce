@@ -2,6 +2,7 @@
 
 ## Status
 - Session state: PAUSE | CLOSE
+- Default to PAUSE when triggered by Save this/Snapshot without explicit pause/close.
 - Terminal status: "Session safely paused. No drift. No loss."
 
 ## Active DP / ticket
