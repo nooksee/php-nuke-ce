@@ -1,3 +1,18 @@
+## 2026-01-07 — ICL-001H: session pause/close snapshot artifact
+
+- Purpose: Formalize the OCL pause/close snapshot artifact for durable, resumable sessions.
+- What shipped:
+  - Added `ops/init/icl/SESSION_SNAPSHOT_OVERVIEW.md`.
+  - Added `ops/init/protocols/SESSION_CLOSE_PROTOCOL.md`.
+  - Updated `ops/init/manifests/OUTPUT_MANIFEST.md`.
+  - Added `ops/templates/SESSION_SNAPSHOT_TEMPLATE.md`.
+- Verification:
+  - `bash tools/verify_tree.sh` ✅
+  - `bash tools/repo/lint_truth.sh` ✅
+- Risk / rollback:
+  - Risk: snapshot artifact expectations may need tuning as OCL evolves.
+  - Rollback: revert the overview/protocol/template and output manifest update.
+
 ## 2026-01-07 — ICL-001G: OCL formalized + ticket model
 
 - Purpose: Formalize OCL as the session lifecycle superset of ICL and define the ticket model.
