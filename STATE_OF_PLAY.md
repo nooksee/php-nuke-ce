@@ -1,3 +1,18 @@
+## 2026-01-07 — ICL-001I: Operator Control Words canonized
+
+- Purpose: Canonize operator control words for snapshot, pause/close, and opine-only behavior.
+- What shipped:
+  - Updated `ops/init/protocols/SESSION_CLOSE_PROTOCOL.md`.
+  - Updated `ops/templates/SESSION_SNAPSHOT_TEMPLATE.md`.
+  - Updated `ops/init/manifests/OUTPUT_MANIFEST.md`.
+  - Updated `ops/init/icl/OCL_OVERVIEW.md`.
+- Verification:
+  - `bash tools/verify_tree.sh` ✅
+  - `bash tools/repo/lint_truth.sh` ✅
+- Risk / rollback:
+  - Risk: control word handling may need tuning as OCL evolves.
+  - Rollback: revert the protocol/template/manifest/overview edits.
+
 ## 2026-01-07 — ICL-001H: session pause/close snapshot artifact
 
 - Purpose: Formalize the OCL pause/close snapshot artifact for durable, resumable sessions.

@@ -15,6 +15,19 @@ Applies to OCL sessions that pause or close, producing a canonical, operator-fac
 - Explicitly forbidden: over-verbosity.
 - Use calm terminal status language, e.g.: "Session safely paused. No drift. No loss."
 
+## Operator Control Words
+Control words are operator-issued commands; case/formatting is not the point, intent is.
+
+Snapshot triggers (equivalent): "Save this:", "Snapshot". Behavior: produce a Session Snapshot artifact (PAUSE unless operator explicitly says CLOSE) and include next safe actions.
+
+Session lifecycle controls (pause): "pause" / "pause session". Behavior: produce Session Snapshot with Session state = PAUSE and stop advancing work.
+
+Session lifecycle controls (close): "close" / "close session". Behavior: produce Session Snapshot with Session state = CLOSE and stop advancing work.
+
+Opine-only control: "no action". Behavior: thoughts only, no DP, no plan, no worker dispatch.
+
+No nanny behavior. Use calm terminal status language, e.g.: "Session safely paused. No drift. No loss."
+
 ## Verification
 - Not run (operator): confirm trigger coverage and posture.
 

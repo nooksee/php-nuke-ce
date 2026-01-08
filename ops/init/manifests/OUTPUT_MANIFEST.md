@@ -9,6 +9,7 @@ Applies to session outputs and required artifacts.
 ## Required output types
 - DP (Dispatch Packet) is the operator-facing work order format for Workers.
 - Session Snapshot is the operator-facing, canonical, resumable pause/close artifact.
+- Session Snapshot is required when control words trigger pause/close/snapshot.
 
 ## Verification
 - Not run (operator): validate output list.
