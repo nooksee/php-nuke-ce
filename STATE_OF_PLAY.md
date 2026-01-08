@@ -1,3 +1,17 @@
+## 2026-01-08 — ICL-001L: truth precedence + ticket/state alignment
+
+- Purpose: Define truth precedence across artifacts and align ticket state with the canonical ledger.
+- What shipped:
+  - Updated `ops/init/icl/OCL_OVERVIEW.md`.
+  - Updated `ops/init/protocols/HANDOFF_PROTOCOL.md`.
+  - Updated `ops/init/manifests/OUTPUT_MANIFEST.md`.
+- Verification:
+  - `bash tools/verify_tree.sh` ✅
+  - `bash tools/repo/lint_truth.sh` ✅
+- Risk / rollback:
+  - Risk: precedence and ledger language may need tuning as OCL canon evolves.
+  - Rollback: revert the overview/protocol/manifest edits.
+
 ## 2026-01-08 — ICL-001K: metadata kit formatting canonized
 
 - Purpose: Canonize metadata kit presentation rules for operator-facing outputs.
