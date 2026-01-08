@@ -18,6 +18,9 @@ Operator-issued control words gate behavior (pause/close/snapshot/no action) and
 ## Metadata Kit Presentation Rule
 Headers are prose. Copy/paste material is always fenced. This applies to AI output directed at operators.
 
+## Truth Precedence
+Authority order when artifacts disagree: STATE_OF_PLAY.md, then Session Snapshot, then DP (ticket).
+
 ## Operational Ethos
 Same rules. Same spine.
 New session. New life.
