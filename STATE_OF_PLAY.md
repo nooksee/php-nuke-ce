@@ -461,3 +461,17 @@
 - Risk / rollback:
   - Risk: operators may miss the queue stop rule if they only scan the top of the template.
   - Rollback: revert the protocol/template edits.
+## 2026-01-09 - DP-ICL-002D4: DP template hygiene + STATE_OF_PLAY compliance
+
+- Purpose: Ensure the DP template contains zero "STOP COPYING" lines and log the compliance update.
+- What shipped:
+  - Updated `ops/templates/DISPATCH_PACKET_TEMPLATE.md`.
+  - Updated `STATE_OF_PLAY.md`.
+- Verification:
+  - `bash tools/verify_tree.sh` ✅
+  - `bash tools/repo/lint_truth.sh` ✅
+  - `bash ops/init/tools/context_lint.sh` ✅
+  - `grep -n "STOP COPYING" ops/templates/DISPATCH_PACKET_TEMPLATE.md` ✅
+- Risk / rollback:
+  - Risk: operators may rely on the DP template for footer phrasing cues.
+  - Rollback: revert the DP template and STATE_OF_PLAY entry.

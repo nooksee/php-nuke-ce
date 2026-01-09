@@ -9,7 +9,7 @@ PRESENTATION RULES
 - Entire DP block is meant to be copied as a unit.
 - DP body stays inside one fence; no partial or nested fences.
 - Do not use "COPY EVERYTHING BETWEEN THE LINES" or dashed rulers; the fence is the copy boundary.
-- Optional but recommended: add a footer outside the fence after the DP block.
+- Operator MAY add a prose footer outside the fence after the DP block.
 
 FRESHNESS GATE (REQUIRED)
 - Active branch name:
