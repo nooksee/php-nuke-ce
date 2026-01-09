@@ -4,6 +4,12 @@
 ```
 WORK ORDER (DP-XXXX) — Title
 
+FRESHNESS GATE (REQUIRED)
+- Active branch name:
+- Current HEAD short hash:
+- DP id + date:
+- STOP if any mismatch vs operator-provided truth.
+
 BRANCH (operator creates first):
 work/<topic>-YYYY-MM-DD
 
@@ -14,6 +20,7 @@ You produce a working-tree diff only.
 
 NON-NEGOTIABLES
 - No direct pushes to `main`. Work only on `work/*` branches.
+- Operator creates the branch first. If it exists, do NOT recreate it. If missing, STOP and report.
 - No invention: if repo evidence for a path/file/claim is missing or ambiguous, flag it; do not guess.
 - Touch only scoped paths listed below.
 - Do not modify files inside `upstream/` (read-only donor bank).
