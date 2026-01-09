@@ -432,3 +432,17 @@
 - Risk / rollback:
   - Risk: stale references if any downstream doc still expects docs/ops full content.
   - Rollback: restore prior docs/ops content and revert ops/doc pointer updates.
+## 2026-01-09 - DP-ICL-002D1: freshness gate canonized
+
+- Purpose: Require a Freshness Gate in Dispatch Packets to block stale context before work begins.
+- What shipped:
+  - Updated `ops/init/protocols/DISPATCH_PACKET_PROTOCOL.md`.
+  - Updated `ops/templates/DISPATCH_PACKET_TEMPLATE.md`.
+  - Updated `STATE_OF_PLAY.md`.
+- Verification:
+  - `bash tools/verify_tree.sh` ✅
+  - `bash tools/repo/lint_truth.sh` ✅
+  - `bash ops/init/tools/context_lint.sh` ✅
+- Risk / rollback:
+  - Risk: stricter DP gating may slow work starts if operator-provided truth is stale.
+  - Rollback: revert the DP protocol/template changes.

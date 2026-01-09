@@ -26,6 +26,7 @@ A DP (Dispatch Packet) is the authoritative, operator-authored work order delive
 
 ## 2. Core Governance Rules (Non-Negotiable)
 - **Branching:** All work must happen on `work/*` branches, created by the Operator.
+- **Branch Creation Rule:** Operator creates the branch first. If it exists, the Worker must not recreate it. If the branch is missing, the Worker must STOP and report.
 - **Merge Process:** Merges to `main` happen via Pull Request (PR) only. No direct pushes to `main` are permitted.
 - **Verification Gates:** `repo-gates` must be green before any merge.
 - **State Ledger:** `STATE_OF_PLAY.md` must be updated within the same PR for any changes to doctrine, governance, or canonical repository structure.
@@ -33,12 +34,21 @@ A DP (Dispatch Packet) is the authoritative, operator-authored work order delive
 - **Merge Commit Metadata:** Merge commit messages and extended descriptions must be filled out completely.
 - **Post-Merge Note:** A post-merge “Merge note” comment on the PR is required.
 
-## 3. Worker Delivery Protocol (No Commit/Push)
+## 3. Freshness Gate (Required)
+Before any work starts, the Worker must echo:
+- Active branch name
+- Current HEAD short hash
+- DP id + date
+
+If the DP date, branch, or hash mismatches operator-provided truth, the Worker must STOP and report the mismatch.
+
+## 4. Worker Delivery Protocol (No Commit/Push)
 - The Worker must deliver all changes as a working tree diff only. The Worker does not commit, push, or merge.
 - The Operator is responsible for reviewing changes, running verification gates, committing, pushing, creating the PR, and merging.
 
-## 4. DP Structure (Required Sections)
+## 5. DP Structure (Required Sections)
 A dispatch packet must contain the following sections to be considered valid:
+- **Freshness Gate:** Required echo fields (branch, HEAD short hash, DP id/date) and stop-if-stale instruction.
 - **Branch:** The exact branch the work will be performed on.
 - **Role:** The persona the worker should adopt (e.g., "You are Gemini (Reviewer)").
 - **Non-Negotiables:** Core rules the worker must follow.
@@ -48,10 +58,10 @@ A dispatch packet must contain the following sections to be considered valid:
 - **Verification:** Specific commands the worker must run to prove the changes work as intended.
 - **Required Output:** The exact format and order of deliverables for the operator (e.g., diff, verification logs).
 
-## 5. DP Delivery Format
+## 6. DP Delivery Format
 - The DP must be delivered inside a fenced code block for copy/paste safety.
 
-## 6. Metadata Surface Requirements
+## 7. Metadata Surface Requirements
 Every work cycle that culminates in a PR must generate all required metadata surfaces. The DP must require these surfaces, but the final filled kit is delivered after work results.
 - IDE commit subject line
 - PR title
