@@ -2,10 +2,12 @@
 set -euo pipefail
 
 format="chatgpt"
+intent=""
+dp="(none)"
 
 usage() {
   cat <<'USAGE'
-Usage: ops/bin/open [--format=chatgpt|gemini]
+Usage: ops/bin/open [--format=chatgpt|gemini] [--intent="..."] [--dp="DP-XXXX / YYYY-MM-DD"]
 USAGE
 }
 
@@ -19,6 +21,12 @@ for arg in "$@"; do
     --format=chatgpt|--format=gemini)
       format="${arg#--format=}"
       ;;
+    --intent=*)
+      intent="${arg#--intent=}"
+      ;;
+    --dp=*)
+      dp="${arg#--dp=}"
+      ;;
     -h|--help)
       usage
       exit 0
@@ -28,6 +36,21 @@ for arg in "$@"; do
       ;;
   esac
 done
+
+if ! command -v git >/dev/null 2>&1; then
+  die "git is required but was not found on PATH."
+fi
+
+if ! repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  die "git repo not found. Run from repo root."
+fi
+
+if [[ "$(pwd -P)" != "$repo_root" ]]; then
+  die "Run from repo root: $repo_root"
+fi
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+head_short="$(git rev-parse --short HEAD)"
 
 required_files=(
   "PROJECT_TRUTH.md"
@@ -63,11 +86,14 @@ fi
 
 cat <<EOF
 ===== OPEN PROMPT =====
-nukeCE OPEN PROMPT (Front Door v1)
+nukeCE OPEN PROMPT (Front Door v2)
 Repo is truth. If a file/path isn't present, say so.
 $mode_line
 
 Constitution (Data Constitution):
+- PROJECT_TRUTH.md
+
+Focus Rule (Operator-Led Flow):
 - PROJECT_TRUTH.md
 
 Canon pointers:
@@ -79,17 +105,16 @@ Canon pointers:
 - ops/init/icl/launch_pack/CONTEXT_PACK.md
 - ops/init/icl/launch_pack/AI_CONTEXT_SYNC.md
 
-Freshness Gate (operator fills from IDE/Git):
-- Active branch name: ________
-- HEAD short hash: ________
-- DP id/date (if applicable): ________
+Freshness Gate (auto):
+- Active branch name: $branch
+- HEAD short hash: $head_short
+- DP id/date (if applicable): $dp
+- Today's intent: $intent
 
 Metadata Kit instruction:
 - After approving work results, tell the assistant you approve and ask for Metadata Kit v1; assistant must emit it immediately.
 
-What I need from you now (operator):
-- branch name
-- HEAD short hash
-- what you want to do today (1 sentence)
+Operator context (optional):
+- If any canon pointers are missing, say so.
 ===== END OPEN PROMPT =====
 EOF
