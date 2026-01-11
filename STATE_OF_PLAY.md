@@ -1,3 +1,16 @@
+## 2026-01-11 — DP-OPS-0002: Front Door v1 open prompt
+
+- Purpose: Add a front door command that prints a ready-to-paste Open Prompt with canon pointers, a freshness gate, and the Metadata Kit instruction.
+- What shipped:
+  - Added `ops/bin/open` (front door prompt generator).
+  - Updated `STATE_OF_PLAY.md`.
+- Verification:
+  - `ls -la ops/bin/open`
+  - `bash ops/bin/open | head -n 80`
+- Risk / rollback:
+  - Risk: Low; new ops helper script only.
+  - Rollback: delete `ops/bin/open` and remove this entry.
+
 ## 2026-01-11 — DP-OPS-0001E: Metadata Kit v1 per-surface copy blocks
 
 - Purpose: Make Metadata Kit v1 copy/paste perfect by giving each surface its own dedicated fenced block; remove branch-name helper line; reduce operator friction.
