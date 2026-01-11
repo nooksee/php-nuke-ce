@@ -1,3 +1,19 @@
+## 2026-01-11 — DP-OPS-0003: Front Door v2 open prompt
+
+- Purpose: Auto-fill branch + HEAD in the open prompt, add optional intent/DP fields, and codify the Focus Rule.
+- What shipped:
+  - Updated `ops/bin/open` to Front Door v2 with git auto-detection and new flags.
+  - Updated `PROJECT_TRUTH.md` with the Focus Rule (Operator-Led Flow).
+  - Updated `STATE_OF_PLAY.md`.
+- Verification:
+  - `git diff --name-only`
+  - `ls -la ops/bin/open`
+  - `bash ops/bin/open | head -n 120`
+  - `bash ops/bin/open --intent="test intent" --dp="DP-OPS-0003 / 2026-01-11" | head -n 120`
+- Risk / rollback:
+  - Risk: Low; ops helper script and canon text update only.
+  - Rollback: revert `ops/bin/open`, `PROJECT_TRUTH.md`, and this entry.
+
 ## 2026-01-11 — DP-OPS-0002: Front Door v1 open prompt
 
 - Purpose: Add a front door command that prints a ready-to-paste Open Prompt with canon pointers, a freshness gate, and the Metadata Kit instruction.

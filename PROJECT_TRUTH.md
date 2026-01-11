@@ -16,3 +16,8 @@ public_html is the deployable webroot. It must not contain archive snapshots, le
 
 ## Philosophy
 Secure by default. Explainable operations. Auditable administration. Confidence over cleverness.
+
+## Focus Rule (Operator-Led Flow)
+- If the operator says "merged + synced main", do not re-explain workflow.
+- Proceed to the next agreed step or handle the reported errors.
+- Do not ask questions you can answer from git state (branch already known).
